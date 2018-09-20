@@ -1,3 +1,5 @@
+import { TSMap } from "typescript-map"
+
 interface IObserver<T> {
     update(data: T):void;
 }
@@ -13,11 +15,12 @@ abstract class Observable<T> {
     }
 
     public notifyObservers() {
-        for (const [observer, active] of this._observers) {
-            if (active) {
-                observer.update(this._getObservableData())
+        const observers = this._observers.keys();
+        for (const observer of observers) {
+            if (this._observers.get(observer)) {
+                observer.update(this._getObservableData());
             }
-        }
+        };
         this._clearRemoveList();
     }
 
@@ -30,7 +33,7 @@ abstract class Observable<T> {
         this._observersRemoveList = [];
     }
 
-    private _observers: Map<IObserver<T>, boolean>;
+    private _observers: TSMap<IObserver<T>, boolean> = new TSMap();
     private _observersRemoveList: Array<IObserver<T>> = [];
 }
 
