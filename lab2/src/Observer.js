@@ -12,7 +12,6 @@ var Observable = /** @class */ (function () {
     Observable.prototype.removeObserver = function (observer) {
         this._observers.set(observer, false);
         this._observersRemoveList.push(observer);
-        this._clearRemoveList();
     };
     Observable.prototype.notifyObservers = function () {
         var observers = this._observers.keys();

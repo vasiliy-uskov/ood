@@ -1,12 +1,12 @@
 {
-  "name": "ood_lab1",
+  "name": "ood_lab2",
   "version": "1.0.0",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "start": "cd ./~output && tsc ../src/app.ts",
+    "start": "tsc ./src/app.ts --outDir ./~output/ && cd ./~output && node app.js",
     "test": "mocha test"
   },
   "author": "Vasiliy Uskov",
@@ -27,5 +27,13 @@
     "typings": "^2.1.1",
     "uuid": "^3.0.1"
   },
-  "description": ""
+  "description": "OOD labs 2",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vasiliy-uskov/ood.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vasiliy-uskov/ood/issues"
+  },
+  "homepage": "https://github.com/vasiliy-uskov/ood#readme"
 }
