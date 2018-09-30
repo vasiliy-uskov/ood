@@ -1,0 +1,39 @@
+{
+  "name": "ood_lab4",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "tsc ./src/app.ts --outDir ./~output/ && cd ./~output && node app.js",
+    "test": "mocha test"
+  },
+  "author": "Vasiliy Uskov",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^5.2.0",
+    "sinon": "^2.2.0",
+    "ts-loader": "^2.0.3",
+    "ts-node": "^3.3.0",
+    "tsconfig-paths": "^2.1.2",
+    "typescript": "^2.3.2"
+  },
+  "dependencies": {
+    "fs-extra": "^3.0.1",
+    "minimist": "^1.2.0",
+    "typescript-map": "0.0.6",
+    "typings": "^2.1.1",
+    "uuid": "^3.0.1"
+  },
+  "description": "OOD labs 4",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vasiliy-uskov/ood.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vasiliy-uskov/ood/issues"
+  },
+  "homepage": "https://github.com/vasiliy-uskov/ood#readme"
+}
