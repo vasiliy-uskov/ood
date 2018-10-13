@@ -18,7 +18,7 @@ class Triangle extends Shape {
         canvas.drawLine(this._vertexes[2], this._vertexes[0]);
     }
 
-    private _vertexes: Array<Vec2>;
+    private _vertexes: Array<Vec2> = [];
 }
 
 export {Triangle}

@@ -17,3 +17,5 @@ class Designer implements IDesigner {
 
     private _shapeFactory: IShapeFactory;
 }
+
+export {Designer};
