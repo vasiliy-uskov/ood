@@ -22,7 +22,7 @@ class Rectangle extends Shape {
         canvas.drawLine(vertex4, vertex1);
     }
 
-    private _vertexes: Array<Vec2>;
+    private _vertexes: Array<Vec2> = [];
 }
 
 export {Rectangle}
