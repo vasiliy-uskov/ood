@@ -13,7 +13,7 @@ class Polygon extends Shape {
         canvas.setColor(this._color);
         for (let i = 0; i < this._points.length; ++i) {
             if (this._points.length > 1) {
-                canvas.drawLine(this._points[i], this._points[i + 1 % this._points.length]);
+                canvas.drawLine(this._points[i], this._points[(i + 1) % this._points.length]);
             }
         }
     }
