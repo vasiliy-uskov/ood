@@ -1,5 +1,4 @@
-import { assert } from "chai";
-import {expect} from "~chai/lib/Chai";
+import {expect} from "Chai";
 import {ShapeFactory} from "../src/ShapeFactory";
 import {Rectangle} from "../src/shape/Rectangle";
 import {Vec2} from "../src/Vec2";
@@ -21,7 +20,7 @@ describe("ShapeFactory", () => {
                 });
             }
             catch (e) {
-                expect(e).equal(invalidShapeTypeError);
+                expect(e).to.deep.equal(invalidShapeTypeError);
             }
         });
         it("when color is invalid", () => {
@@ -33,7 +32,7 @@ describe("ShapeFactory", () => {
                 });
             }
             catch (e) {
-                expect(e).equal(invalidInputTypeError);
+                expect(e).to.deep.equal(invalidInputTypeError);
             }
         });
         it("when try to create rectangle without vertexes", () => {
@@ -44,7 +43,7 @@ describe("ShapeFactory", () => {
                 });
             }
             catch (e) {
-                expect(e).equal(invalidInputTypeError);
+                expect(e).to.deep.equal(invalidInputTypeError);
             }
         });
         it("when try to create triangle without vertexes", () => {
@@ -55,7 +54,7 @@ describe("ShapeFactory", () => {
                 });
             }
             catch (e) {
-                expect(e).equal(invalidInputTypeError);
+                expect(e).to.deep.equal(invalidInputTypeError);
             }
         });
         it("when try to create ellipse with string radius", () => {
@@ -69,7 +68,7 @@ describe("ShapeFactory", () => {
                 });
             }
             catch (e) {
-                expect(e).equal(invalidInputTypeError);
+                expect(e).to.deep.equal(invalidInputTypeError);
             }
         });
         it("when try to create ellipse without center", () => {
@@ -82,7 +81,7 @@ describe("ShapeFactory", () => {
                 });
             }
             catch (e) {
-                expect(e).equal(invalidInputTypeError);
+                expect(e).to.deep.equal(invalidInputTypeError);
             }
         });
     });
@@ -94,35 +93,35 @@ describe("ShapeFactory", () => {
                 vertex1: {x: 1, y: 1},
                 vertex2: {x: 2, y: 2}
             });
-            expect(rectangle).equal(new Rectangle(Color.Red, new Vec2(1, 1), new Vec2(2, 2)));
+            expect(rectangle).to.deep.equal(new Rectangle(Color.Red, new Vec2(1, 1), new Vec2(2, 2)));
         });
         it("triangle", () => {
-            const rectangle = shapeFactory.createShape({
+            const triangle = shapeFactory.createShape({
                 type: "triangle",
                 color: Color.Red,
                 vertex1: {x: 0, y: 1},
                 vertex2: {x: 1, y: 0},
                 vertex3: {x: 0, y: 0}
             });
-            expect(rectangle).equal(new Triangle(Color.Red, new Vec2(0, 1), new Vec2(1, 0), new Vec2(0, 0)));
+            expect(triangle).to.deep.equal(new Triangle(Color.Red, new Vec2(0, 1), new Vec2(1, 0), new Vec2(0, 0)));
         });
         it("polygon", () => {
-            const rectangle = shapeFactory.createShape({
+            const polygon = shapeFactory.createShape({
                 type: "polygon",
                 color: Color.Red,
                 vertexes: [{x: 0, y: 1}],
             });
-            expect(rectangle).equal(new Polygon(Color.Red, [new Vec2(0, 1)]));
+            expect(polygon).to.deep.equal(new Polygon(Color.Red, [new Vec2(0, 1)]));
         });
         it("ellipse", () => {
-            const rectangle = shapeFactory.createShape({
-                type: "polygon",
+            const ellipse = shapeFactory.createShape({
+                type: "ellipse",
                 color: Color.Red,
                 center: {x: 0, y: 1},
                 radiusX: 0,
                 radiusY: 1,
             });
-            expect(rectangle).equal(new Ellipse(Color.Red, new Vec2(0, 1), 0, 1));
+            expect(ellipse).to.deep.equal(new Ellipse(Color.Red, new Vec2(0, 1), 0, 1));
         })
     });
 });

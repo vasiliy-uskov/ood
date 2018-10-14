@@ -10,7 +10,7 @@ import {Color} from "./Color";
 
 class ShapeFactory implements IShapeFactory {
     createShape(shapeDescription: Object): Shape {
-        this._verifyObject(shapeDescription["type"]);
+        this._verifyObject(shapeDescription);
         switch (shapeDescription["type"]) {
             case ShapeType.Triangle:
                 return this._createTriangle(shapeDescription);
