@@ -9,7 +9,7 @@ class Canvas implements ICanvas {
     }
 
     setColor(color: Color) {
-        this._addCurrentPath();
+        this._addCurrentPathToPicture();
         this._currentColor = color;
     }
 
@@ -44,7 +44,7 @@ class Canvas implements ICanvas {
 
     close() {
         this._currentPath += " Z";
-        this._addCurrentPath();
+        this._addCurrentPathToPicture();
     }
 
     getPicture(): string {
@@ -59,7 +59,7 @@ class Canvas implements ICanvas {
         return result;
     }
 
-    _addCurrentPath() {
+    _addCurrentPathToPicture() {
         if (this._currentPath.length) {
             this._paths.push({
                 color: this._colorToString(this._currentColor),
