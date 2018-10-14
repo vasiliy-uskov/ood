@@ -3,6 +3,7 @@ import {Painter} from "./Pinter";
 import {Designer} from "./Designer";
 import {ShapeFactory} from "./ShapeFactory";
 
+const canvas = new Canvas(50, 50);
 const painter = new Painter();
 const designer = new Designer(new ShapeFactory());
 painter.drawPicture(designer.createDraft([
@@ -39,4 +40,6 @@ painter.drawPicture(designer.createDraft([
             {x: 7, y: 6}
         ]
     }
-]), new Canvas());
+]), canvas);
+
+console.log(canvas.getPicture());

@@ -13,15 +13,20 @@ describe("Ellipse", () => {
         const mockCanvas = new MockCanvas();
         (new Ellipse(Color.Red, new Vec2(0, 1), 0, 1)).draw(mockCanvas);
         const primitives = mockCanvas.primitives();
-        expect(primitives.length).equal(1);
-        expect(primitives[0]).to.deep.equal({
-            type: "arc",
-            color: Color.Red,
-            center: new Vec2(0, 1),
-            radiusX: 0,
-            radiusY: 1,
-            startAngle: 0,
-            angle: Math.PI * 2
-        });
+        expect(primitives.length).equal(2);
+        expect(primitives).to.deep.equal([
+            {
+                type: "arc",
+                color: Color.Red,
+                center: new Vec2(0, 1),
+                radiusX: 0,
+                radiusY: 1,
+                startAngle: 0,
+                angle: Math.PI * 2
+            },
+            {
+                type: "close"
+            }
+        ]);
     });
 });

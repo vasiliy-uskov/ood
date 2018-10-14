@@ -11,8 +11,7 @@ class Ellipse extends Shape {
         this._radiusY = radiusY;
     }
 
-    public draw(canvas: ICanvas) {
-        canvas.setColor(this._color);
+    protected _drawShape(canvas: ICanvas) {
         canvas.drawArc(this._center, this._radiusX, this._radiusY, 0, Math.PI * 2);
     }
 

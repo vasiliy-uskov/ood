@@ -10,7 +10,14 @@ abstract class Shape {
         return this._color;
     }
 
-    public abstract draw(canvas: ICanvas);
+    public draw(canvas: ICanvas) {
+        canvas.setColor(this._color);
+        this._drawShape(canvas);
+        canvas.close();
+
+    }
+
+    protected abstract _drawShape(canvas: ICanvas);
 
     protected _color: Color;
 }

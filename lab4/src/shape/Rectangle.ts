@@ -10,8 +10,7 @@ class Rectangle extends Shape {
         this._vertexes.push(vertex2);
     }
 
-    public draw(canvas: ICanvas) {
-        canvas.setColor(this._color);
+    protected _drawShape(canvas: ICanvas) {
         const vertex1 = this._vertexes[0];
         const vertex2 = new Vec2(this._vertexes[1].x, this._vertexes[0].y);
         const vertex3 = this._vertexes[1];

@@ -13,7 +13,7 @@ describe("Rectangle", () => {
         const mockCanvas = new MockCanvas();
         (new Rectangle(Color.Red, new Vec2(0, 0), new Vec2(2, 2))).draw(mockCanvas);
         const primitives = mockCanvas.primitives();
-        expect(primitives.length).equal(4);
+        expect(primitives.length).equal(5);
         expect(primitives).to.deep.equal([
             {
                 type: "line",
@@ -38,6 +38,9 @@ describe("Rectangle", () => {
                 color: Color.Red,
                 from: new Vec2(0, 2),
                 to: new Vec2(0, 0)
+            },
+            {
+                type: "close"
             }
         ]);
     });
