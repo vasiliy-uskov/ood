@@ -2,7 +2,7 @@ import {Color} from "./Color";
 import {ICanvas} from "./ICanvas";
 import {Vec2} from "./Vec2";
 
-class Canvas implements ICanvas {
+class SvgCanvas implements ICanvas {
     constructor(width: number, height: number) {
         this._width = width;
         this._height = height;
@@ -103,4 +103,4 @@ class Canvas implements ICanvas {
 
 }
 
-export {Canvas};
+export {SvgCanvas};
