@@ -52,7 +52,7 @@ class Canvas implements ICanvas {
         for (const {color, path} of this._paths) {
             result += `<path fill="${color}" d="${path}"></path>`;
         }
-        if (this._currentPath.length) {
+        if (this._currentPath) {
             result += `<path fill="${this._colorToString(this._currentColor)}" d="${this._currentPath}"></path>`;
         }
         result += "</svg>";
@@ -60,7 +60,7 @@ class Canvas implements ICanvas {
     }
 
     _addCurrentPathToPicture() {
-        if (this._currentPath.length) {
+        if (this._currentPath) {
             this._paths.push({
                 color: this._colorToString(this._currentColor),
                 path: this._currentPath
