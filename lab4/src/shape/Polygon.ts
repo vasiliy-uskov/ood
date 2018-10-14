@@ -9,8 +9,7 @@ class Polygon extends Shape {
         this._points = points;
     }
 
-    public draw(canvas: ICanvas) {
-        canvas.setColor(this._color);
+    protected _drawShape(canvas: ICanvas) {
         for (let i = 0; i < this._points.length; ++i) {
             if (this._points.length > 1) {
                 canvas.drawLine(this._points[i], this._points[(i + 1) % this._points.length]);

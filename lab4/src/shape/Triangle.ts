@@ -11,8 +11,7 @@ class Triangle extends Shape {
         this._vertexes.push(vertex3);
     }
 
-    public draw(canvas: ICanvas) {
-        canvas.setColor(this._color);
+    protected _drawShape(canvas: ICanvas) {
         canvas.drawLine(this._vertexes[0], this._vertexes[1]);
         canvas.drawLine(this._vertexes[1], this._vertexes[2]);
         canvas.drawLine(this._vertexes[2], this._vertexes[0]);

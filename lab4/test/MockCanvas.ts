@@ -15,6 +15,10 @@ class MockCanvas implements ICanvas {
         this._primitives.push({type: "arc", color: this._color, center, radiusX, radiusY, startAngle, angle});
     }
 
+    close() {
+        this._primitives.push({type: "close"})
+    }
+
     primitives(): Array<Object> {
         return this._primitives.slice();
     }
