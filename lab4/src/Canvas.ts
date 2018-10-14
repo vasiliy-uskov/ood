@@ -14,29 +14,44 @@ class Canvas implements ICanvas {
     }
 
     drawLine(from: Vec2, to: Vec2) {
-        this._currentPath += ` M ${from.x} ${from.y}`;
+        this._initStartPoint(from);
         this._currentPath += ` L ${to.x} ${to.y}`;
+        this._lastPoint = to;
     }
 
     drawArc(center: Vec2, radiusX: number, radiusY: number, startAngle: number, angle: number) {
-        const startPoint = new Vec2(
-            center.x + Math.cos(startAngle) * radiusX,
-            center.x + Math.cos(startAngle) * radiusX
-        );
-        this._currentPath += ` M ${startPoint.x} ${startPoint.y}`;
-        this._currentPath += ` A ${radiusX} ${radiusY} ${angle} 0 0`;
+        const drawArc = (startAngle: number, angle: number) => {
+            const startPoint = new Vec2(
+                center.x + Math.cos(startAngle) * radiusX,
+                center.y + Math.sin(startAngle) * radiusY
+            );
+            const endPoint = new Vec2(
+                center.x + Math.cos(startAngle + angle) * radiusX,
+                center.y + Math.sin(startAngle + angle) * radiusY
+            );
+            this._initStartPoint(startPoint);
+            this._currentPath += ` A ${radiusX} ${radiusY} ${angle / Math.PI * 180} 0 1 ${endPoint.x} ${endPoint.y}`;
+            this._lastPoint = endPoint;
+        };
+        const arcCount = Math.floor(angle / Math.PI);
+        for (let i = 0; i < arcCount; ++i) {
+            drawArc(startAngle + Math.PI * i, Math.PI);
+        }
+        if (angle - arcCount * Math.PI) {
+            drawArc(startAngle + Math.PI * arcCount, angle - arcCount * Math.PI);
+        }
     }
 
     close() {
-        this._currentPath += " z";
+        this._currentPath += " Z";
         this._addCurrentPath();
     }
 
     getPicture(): string {
         this._addCurrentPath();
-        let result = "<svg>";
+        let result = `<svg width="${this._width}px" height="${this._height}px">`;
         for (const {color, path} of this._paths) {
-            result += `<path fill="${color}" d="${path}">`;
+            result += `<path fill="${color}" d="${path}"></path>`;
         }
         result += "</svg>";
         return result;
@@ -49,6 +64,14 @@ class Canvas implements ICanvas {
                 path: this._currentPath
             });
             this._currentPath = "";
+            this._lastPoint = null;
+        }
+    }
+
+    _initStartPoint(lastPoint: Vec2) {
+        if (!this._lastPoint || lastPoint.x != this._lastPoint.x && lastPoint.y != this._lastPoint.y) {
+            this._lastPoint = lastPoint;
+            this._currentPath += ` M ${lastPoint.x} ${lastPoint.y}`;
         }
     }
 
@@ -74,6 +97,7 @@ class Canvas implements ICanvas {
     private _paths: Array<{path: string, color: string}> = [];
     private _currentPath: string = "";
     private _currentColor: Color = Color.Black;
+    private _lastPoint?: Vec2 = null;
 
 }
 
