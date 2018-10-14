@@ -48,10 +48,12 @@ class Canvas implements ICanvas {
     }
 
     getPicture(): string {
-        this._addCurrentPath();
         let result = `<svg width="${this._width}px" height="${this._height}px">`;
         for (const {color, path} of this._paths) {
             result += `<path fill="${color}" d="${path}"></path>`;
+        }
+        if (this._currentPath.length) {
+            result += `<path fill="${this._colorToString(this._currentColor)}" d="${this._currentPath}"></path>`;
         }
         result += "</svg>";
         return result;
