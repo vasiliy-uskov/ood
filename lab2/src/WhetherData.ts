@@ -1,12 +1,20 @@
 import {Observable} from "./Observer";
 import {IObserver} from "./Observer";
+import {TSMap} from "typescript-map";
 
 class WhetherInfo {
-    constructor(temperature: number, humidity: number, pressure: number) {
+    constructor(temperature: number, humidity: number, pressure: number, id: string) {
         this.humidity = humidity;
         this.temperature = temperature;
         this.pressure = pressure;
+        this._id = id
     }
+
+    id(): string {
+        return this._id;
+    }
+
+    public _id: string;
     public temperature: number;
     public humidity: number;
     public pressure: number;
@@ -44,12 +52,16 @@ class Statistics {
 
 class StatisticsDisplay implements IObserver<WhetherInfo> {
     public update(data: WhetherInfo) {
-        this._temperatureStatistics.addValue(data.temperature);
-        this._humidityStatistics.addValue(data.humidity);
-        this._pressureStatistics.addValue(data.pressure);
-        this.displayStatistics("Temp", this._temperatureStatistics);
-        this.displayStatistics("Pressure", this._pressureStatistics);
-        this.displayStatistics("Humidity", this._humidityStatistics);
+        this._initStatistic(data.id());
+        const temperatureStatistics = this._temperatureStatistics.get(data.id());
+        const humidityStatistics = this._humidityStatistics.get(data.id());
+        const pressureStatistics = this._pressureStatistics.get(data.id());
+        temperatureStatistics.addValue(data.temperature);
+        humidityStatistics.addValue(data.humidity);
+        pressureStatistics.addValue(data.pressure);
+        this.displayStatistics(`Temp ${data.id()}`, temperatureStatistics);
+        this.displayStatistics(`Pressure ${data.id()}`, pressureStatistics);
+        this.displayStatistics(`Humidity ${data.id()}`, humidityStatistics);
     }
 
     public displayStatistics(statisticsName: string, statistics: Statistics) {
@@ -59,12 +71,25 @@ class StatisticsDisplay implements IObserver<WhetherInfo> {
         console.log("--------");
     }
 
-    public _temperatureStatistics: Statistics = new Statistics();
-    public _humidityStatistics: Statistics = new Statistics();
-    public _pressureStatistics: Statistics = new Statistics();
+    _initStatistic(id: string) {
+        for (const statistics of [this._humidityStatistics, this._temperatureStatistics, this._pressureStatistics]) {
+            if (!statistics.has(id)) {
+                statistics.set(id, new Statistics());
+            }
+        }
+    }
+
+    private _temperatureStatistics: TSMap<string, Statistics> = new TSMap();
+    private _humidityStatistics: TSMap<string, Statistics> = new TSMap();
+    private _pressureStatistics: TSMap<string, Statistics> = new TSMap();
 }
 
 class WhetherData extends Observable<WhetherInfo> {
+    constructor(name: string) {
+        super();
+        this._name = name;
+    }
+
     public temperature(): number {
         return this._temperature;
     }
@@ -89,12 +114,15 @@ class WhetherData extends Observable<WhetherInfo> {
     }
 
     protected _getObservableData() {
-        return new WhetherInfo(this.temperature(), this.humidity(), this.pressure());
+        return new WhetherInfo(this.temperature(), this.humidity(), this.pressure(), this._name);
     }
+
+    private _name: string;
     private _temperature: number = 0.;
     private _humidity: number = 0.;
     private _pressure: number = 750.;
 }
 
 export {WhetherData};
+export {WhetherInfo};
 export {StatisticsDisplay};

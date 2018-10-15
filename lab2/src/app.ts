@@ -1,11 +1,10 @@
 import {WhetherData} from "./WhetherData";
 import {StatisticsDisplay} from "./WhetherData";
 
-const wd: WhetherData = new WhetherData();
+const wdIn: WhetherData = new WhetherData("in");
+const wdOut: WhetherData = new WhetherData("out");
 const display: StatisticsDisplay =  new StatisticsDisplay();
-wd.addObserver(display);
-wd.setMeasurements(3, 0.7, 760);
-wd.setMeasurements(4, 0.8, 761);
-wd.removeObserver(display);
-wd.setMeasurements(10, 0.8, 761);
-wd.setMeasurements(-10, 0.8, 761);
+wdIn.addObserver(display);
+wdOut.addObserver(display);
+wdIn.setMeasurements(3, 0.7, 760);
+wdOut.setMeasurements(4, 0.8, 761);
