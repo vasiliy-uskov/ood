@@ -1,9 +1,9 @@
-import {Canvas} from "./Canvas";
+import {SvgCanvas} from "./SvgCanvas";
 import {Painter} from "./Pinter";
 import {Designer} from "./Designer";
 import {ShapeFactory} from "./ShapeFactory";
 
-const canvas = new Canvas(50, 50);
+const canvas = new SvgCanvas(50, 50);
 const painter = new Painter();
 const designer = new Designer(new ShapeFactory());
 painter.drawPicture(designer.createDraft([
@@ -39,5 +39,4 @@ painter.drawPicture(designer.createDraft([
         ]
     }
 ]), canvas);
-
 console.log(canvas.getPicture());
