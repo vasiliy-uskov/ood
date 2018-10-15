@@ -1,4 +1,3 @@
-import {expect} from "Chai";
 import {ShapeFactory} from "../src/ShapeFactory";
 import {Rectangle} from "../src/shape/Rectangle";
 import {Vec2} from "../src/Vec2";
@@ -6,6 +5,7 @@ import {Color} from "../src/Color";
 import {Triangle} from "../src/shape/Triangle";
 import {Polygon} from "../src/shape/Polygon";
 import {Ellipse} from "../src/shape/Ellipse";
+import {expect} from "Chai";
 
 const shapeFactory = new ShapeFactory();
 const invalidShapeTypeError = new Error("Incorrect shape description");

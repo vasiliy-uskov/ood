@@ -19,7 +19,7 @@
     "ts-loader": "^2.0.3",
     "ts-node": "^3.3.0",
     "tsconfig-paths": "^2.1.2",
-    "typescript": "^2.3.2"
+    "typescript": "^2.9.2"
   },
   "dependencies": {
     "fs-extra": "^3.0.1",
