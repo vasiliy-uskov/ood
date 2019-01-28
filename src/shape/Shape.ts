@@ -17,7 +17,7 @@ abstract class Shape {
 
     }
 
-    protected abstract _drawShape(canvas: ICanvas);
+    protected abstract _drawShape(canvas: ICanvas): void;
 
     protected _color: Color;
 }

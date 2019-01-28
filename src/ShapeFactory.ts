@@ -8,8 +8,9 @@ import {ShapeType} from "./shape/ShapeTypes"
 import {Vec2} from "./Vec2";
 import {Color} from "./Color";
 
+
 class ShapeFactory implements IShapeFactory {
-    createShape(shapeDescription: Object): Shape {
+    createShape(shapeDescription: any): Shape {
         this._verifyObject(shapeDescription);
         switch (shapeDescription["type"]) {
             case ShapeType.Triangle:
@@ -25,7 +26,7 @@ class ShapeFactory implements IShapeFactory {
         }
     }
 
-    private  _createEllipse(shapeDescription: Object): Ellipse {
+    private  _createEllipse(shapeDescription: any): Ellipse {
         const color = this._verifyColor(shapeDescription["color"]);
         const radiusX = this._verifyNumber(shapeDescription["radiusX"]);
         const radiusY = this._verifyNumber(shapeDescription["radiusY"]);
@@ -33,7 +34,7 @@ class ShapeFactory implements IShapeFactory {
         return new Ellipse(color, new Vec2(center.x, center.y), radiusX, radiusY);
     }
 
-    private _createPolygon(shapeDescription: Object): Polygon {
+    private _createPolygon(shapeDescription: any): Polygon {
         const color = this._verifyColor(shapeDescription["color"]);
         const vertexes = shapeDescription["vertexes"];
         const vec2List = [];
@@ -44,7 +45,7 @@ class ShapeFactory implements IShapeFactory {
         return new Polygon(color, vec2List);
     }
 
-    private _createTriangle(shapeDescription: Object): Triangle {
+    private _createTriangle(shapeDescription: any): Triangle {
         const color = this._verifyColor(shapeDescription["color"]);
         const vertex1 = this._verifyPoint(shapeDescription["vertex1"]);
         const vertex2 = this._verifyPoint(shapeDescription["vertex2"]);
@@ -52,7 +53,7 @@ class ShapeFactory implements IShapeFactory {
         return new Triangle(color, new Vec2(vertex1.x, vertex1.y), new Vec2(vertex2.x, vertex2.y), new Vec2(vertex3.x, vertex3.y));
     }
 
-    private _createRectangle(shapeDescription: Object): Rectangle {
+    private _createRectangle(shapeDescription: any): Rectangle {
         const color = this._verifyColor(shapeDescription["color"]);
         const vertex1 = this._verifyPoint(shapeDescription["vertex1"]);
         const vertex2 = this._verifyPoint(shapeDescription["vertex2"]);
