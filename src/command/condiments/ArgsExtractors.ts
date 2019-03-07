@@ -6,11 +6,7 @@ class MassExtractor {
 			return +(args.match(/mass(?: )*([0-9]+)/i)[1])
 		}
 		catch {
-			throw new Error(`
-Can not find mass.
-Please specify a mass:
-${this.help()}
-`)
+			throw new Error(`\nCan not find mass.\nPlease specify a mass:\n${this.help()}\n`)
 		}
 	}
 
@@ -25,11 +21,7 @@ class QuantityExtractor {
 			return +(args.match(/quantity(?: )*([0-9]+)/i)[1])
 		}
 		catch {
-			throw new Error(`
-Can not find quantity.
-Please specify a quantity:
-${this.help()}
-`)
+			throw new Error(`\nCan not find quantity.\nPlease specify a quantity:\n${this.help()}\n`)
 		}
 	}
 
@@ -52,11 +44,7 @@ class TypeExtractor<T> {
 				return this._typeMap[chosenType];
 			}
 		}
-		throw new Error(`
-Can not find type.
-Please specify a type:
-${this.help()}
-`)
+		throw new Error(`\nCan not find type.\nPlease specify a type:\n${this.help()}\n`)
 	}
 
 	help(): string {

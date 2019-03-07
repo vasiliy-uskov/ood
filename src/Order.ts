@@ -27,8 +27,8 @@ class Order {
 
 	getDescription(): string {
 		return this._beverages
-			.map(beverage => beverage.getDescription())
-			.join('\n') + '\n';
+				.map(beverage => beverage.getDescription())
+				.join('\n') + '\n';
 	}
 
 	private _beverages: Array<IBeverage> = [];

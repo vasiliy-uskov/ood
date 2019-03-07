@@ -1,4 +1,4 @@
-import {createInterface} from 'readline';
+import {createInterface} from "readline";
 import {BeverageShaker} from "./BeverageShaker";
 
 const beverageShaker = new BeverageShaker();

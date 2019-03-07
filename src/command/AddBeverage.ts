@@ -1,19 +1,21 @@
-import {Capuccino} from "../beverage/Capuccino";
-import {Espresso} from "../beverage/Espresso";
-import {Latte} from "../beverage/Latte";
-import {Milkshake} from "../beverage/Milkshake";
-import {Tea} from "../beverage/Tea";
-import {IBeverage} from "../beverage/IBeverage";
 import {Order} from "../Order";
 import {ICommand} from "./ICommand";
+import {
+	CapuccinoCreator,
+	EspressoCreator,
+	IBeverageCreator,
+	LatteCreator,
+	MilkshakeCreator,
+	TeaCreator
+} from "./beverages/BeveragesCreators";
 
-const BeveragesTypes: {[key:string]: () => IBeverage} = {
-	'capuccino': () => new Capuccino(),
-	'espresso': () => new Espresso(),
-	'latte': () => new Latte(),
-	'milkshake': () => new Milkshake(),
-	'tea': () => new Tea(),
-};
+const beverageCreators: Array<Readonly<IBeverageCreator>> = [
+	new CapuccinoCreator(),
+	new LatteCreator(),
+	new EspressoCreator(),
+	new TeaCreator(),
+	new MilkshakeCreator(),
+];
 
 class AddBeverage implements ICommand {
 	constructor(order: Order) {
@@ -21,27 +23,30 @@ class AddBeverage implements ICommand {
 	}
 
 	execute(command: string) {
-		const matchResult = command.toLowerCase().match(/make (\w+)/);
+		const matchResult = command.toLowerCase().match(/make (\w+)? ?(\w+)/);
 		if (matchResult) {
-			const type = matchResult[1];
-			if (BeveragesTypes[type]) {
-				this._order.addBeverage(BeveragesTypes[type]());
-				return;
+			const args = matchResult[1];
+			const type = matchResult[2];
+			for (const creator of beverageCreators) {
+				if (creator.is(type)) {
+					this._order.addBeverage(creator.create(args))
+					return;
+				}
 			}
 		}
 		throw new Error(`Wrong command!\nTry: ${this.help()}`)
 	}
 
 	help(): string {
-		return `make <${this._getBeverageTypes()}>\n`
+		return `make  <
+${beverageCreators
+			.map(creator => `	${creator.help()}`)
+			.join('|\n')}
+>\n`
 	}
 
 	is(command: string): boolean {
 		return !!command.toLowerCase().match(/make.*/)
-	}
-
-	private _getBeverageTypes(): string {
-		return Object.keys(BeveragesTypes).join('|');
 	}
 
 	private readonly _order: Order;

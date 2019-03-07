@@ -6,7 +6,8 @@ import {
 	CoconutFlakesCreator,
 	IceCubesCreator,
 	ICondimentCreator,
-	LemonCreator, SyrupCreator
+	LemonCreator,
+	SyrupCreator
 } from "./condiments/CondimentsCreators";
 
 const condimentCreators: Array<Readonly<ICondimentCreator>> = [
@@ -28,10 +29,8 @@ class AddCondiment implements ICommand {
 		if (matchResult) {
 			const condiment = matchResult[1];
 			const args = matchResult[3];
-			for (const creator of condimentCreators)
-			{
-				if (creator.is(condiment))
-				{
+			for (const creator of condimentCreators) {
+				if (creator.is(condiment)) {
 					this._order.addCondiment(creator.create(args));
 					return
 				}
