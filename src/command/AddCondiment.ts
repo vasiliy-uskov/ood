@@ -2,11 +2,13 @@ import {Order} from "../Order";
 import {ICommand} from "./ICommand";
 import {
 	ChocolateCrumbsCreator,
+	ChocolateSlicesCreator,
 	CinnamonCreator,
 	CoconutFlakesCreator,
+	CreamCreator,
 	IceCubesCreator,
 	ICondimentCreator,
-	LemonCreator,
+	LemonCreator, LiquorCreator,
 	SyrupCreator
 } from "./condiments/CondimentsCreators";
 
@@ -17,6 +19,9 @@ const condimentCreators: Array<Readonly<ICondimentCreator>> = [
 	new LemonCreator(),
 	new IceCubesCreator(),
 	new SyrupCreator(),
+	new LiquorCreator(),
+	new ChocolateSlicesCreator(),
+	new CreamCreator(),
 ];
 
 class AddCondiment implements ICommand {

@@ -6,6 +6,9 @@ import {CoconutFlakes} from "../../condiment/CoconutFlakes";
 import {Lemon} from "../../condiment/Lemon";
 import {IceCubes, IceCubesType} from "../../condiment/IceCubes";
 import {Syrup, SyrupType} from "../../condiment/Syrop";
+import {Liquor, LiquorType} from "../../condiment/Liquor";
+import {Cream} from "../../condiment/Cream";
+import {ChocolateSlices} from "../../condiment/ChocolateSlices";
 
 export interface ICondimentCreator {
 	create(args: string): ICondiment;
@@ -24,7 +27,7 @@ export class ChocolateCrumbsCreator implements ICondimentCreator {
 	}
 
 	is(condimentType: string): boolean {
-		return condimentType == 'chocolate crumbs';
+		return condimentType.toLowerCase() == 'chocolate crumbs';
 	}
 
 	private readonly _massExtractor = new MassExtractor();
@@ -40,7 +43,7 @@ export class CinnamonCreator implements ICondimentCreator {
 	}
 
 	is(condimentType: string): boolean {
-		return condimentType == 'cinnamon';
+		return condimentType.toLowerCase() == 'cinnamon';
 	}
 }
 
@@ -55,7 +58,7 @@ export class CoconutFlakesCreator implements ICondimentCreator {
 	}
 
 	is(condimentType: string): boolean {
-		return condimentType == 'сoconut flakes';
+		return condimentType.toLowerCase() == 'сoconut flakes';
 	}
 
 	private readonly _massExtractor = new MassExtractor();
@@ -72,7 +75,7 @@ export class LemonCreator implements ICondimentCreator {
 	}
 
 	is(condimentType: string): boolean {
-		return condimentType == 'lemon';
+		return condimentType.toLowerCase() == 'lemon';
 	}
 
 	private readonly _quantityExtractor = new QuantityExtractor();
@@ -90,7 +93,7 @@ export class IceCubesCreator implements ICondimentCreator {
 	}
 
 	is(condimentType: string): boolean {
-		return condimentType == 'ice cubes';
+		return condimentType.toLowerCase() == 'ice cubes';
 	}
 
 	private readonly _quantityExtractor = new QuantityExtractor();
@@ -111,11 +114,62 @@ export class SyrupCreator implements ICondimentCreator {
 	}
 
 	is(condimentType: string): boolean {
-		return condimentType == 'syrup';
+		return condimentType.toLowerCase() == 'syrup';
 	}
 
 	private readonly _typeExtractor = new TypeExtractor({
 		'chocolate': SyrupType.chocolate,
 		'maple': SyrupType.maple,
+	});
+}
+
+export class CreamCreator implements ICondimentCreator {
+	create(args: string): Cream {
+		return new Cream();
+	}
+
+	help(): string {
+		return 'cream'
+	}
+
+	is(condimentType: string): boolean {
+		return condimentType.toLowerCase() == 'cream';
+	}
+}
+
+export class ChocolateSlicesCreator implements ICondimentCreator {
+	create(args: string): ChocolateSlices {
+		const quantity = this._quantityExtractor.extract(args);
+		return new ChocolateSlices(quantity);
+	}
+
+	help(): string {
+		return `chocolate slices: ${this._quantityExtractor.help()}`
+	}
+
+	is(condimentType: string): boolean {
+		return condimentType.toLowerCase() == 'chocolate slices';
+	}
+
+	private readonly _quantityExtractor = new QuantityExtractor();
+}
+
+export class LiquorCreator implements ICondimentCreator {
+	create(args: string): Liquor {
+		const type = this._typeExtractor.extract(args);
+		return new Liquor(type);
+	}
+
+	help(): string {
+		return `liquor: ${this._typeExtractor.help()}`
+	}
+
+	is(condimentType: string): boolean {
+		return condimentType.toLowerCase() == 'liquor';
+	}
+
+	private readonly _typeExtractor = new TypeExtractor({
+		'chocolate': LiquorType.chocolate,
+		'nuts': LiquorType.nuts,
 	});
 }

@@ -10,7 +10,7 @@ class CoconutFlakes implements ICondiment {
 	}
 
 	getDescription(): string {
-		return `Coconut flakes ${this._mass}g`;
+		return `coconut flakes ${this._mass}g`;
 	}
 
 	private readonly _mass: number;

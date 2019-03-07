@@ -10,7 +10,7 @@ class Lemon implements ICondiment {
 	}
 
 	getDescription(): string {
-		return `Lemon x${this._quantity}`;
+		return `lemon x${this._quantity}`;
 	}
 
 	private readonly _quantity: number;

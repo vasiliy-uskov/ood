@@ -10,7 +10,7 @@ class ChocolateCrumbs implements ICondiment {
 	}
 
 	getDescription(): string {
-		return `Chocolate crumbs ${this._mass}g`;
+		return `chocolate crumbs ${this._mass}g`;
 	}
 
 	private readonly _mass: number;

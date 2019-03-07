@@ -6,7 +6,7 @@ class Cinnamon implements ICondiment {
 	}
 
 	getDescription(): string {
-		return `Cinnamon`;
+		return `cinnamon`;
 	}
 }
 

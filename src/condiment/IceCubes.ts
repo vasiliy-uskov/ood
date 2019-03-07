@@ -1,8 +1,8 @@
 import {ICondiment} from "./ICondiment";
 
 enum IceCubesType {
-	dry = 'Dry',
-	water = 'Water',
+	dry = 'dry',
+	water = 'water',
 }
 
 class IceCubes implements ICondiment {

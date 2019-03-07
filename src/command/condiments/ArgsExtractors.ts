@@ -1,5 +1,3 @@
-
-
 class MassExtractor {
 	extract(args: string): number {
 		try {

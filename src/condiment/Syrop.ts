@@ -1,8 +1,8 @@
 import {ICondiment} from "./ICondiment";
 
 enum SyrupType {
-	chocolate = 'Chocolate',
-	maple = 'Maple',
+	chocolate = 'chocolate',
+	maple = 'maple',
 }
 
 class Syrup implements ICondiment {
