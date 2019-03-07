@@ -1,11 +1,10 @@
-import {ICondiment} from "./ICondiment";
-
-class Cinnamon implements ICondiment {
-	getCoast(): number {
+import {BeverageDecorator} from "./BeverageDecorator";
+class Cinnamon extends BeverageDecorator {
+	protected _getCondimentCost(): number {
 		return 20;
 	}
 
-	getDescription(): string {
+	protected _getCondimentDescription(): string {
 		return `cinnamon`;
 	}
 }

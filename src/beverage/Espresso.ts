@@ -1,7 +1,7 @@
 import {IBeverage} from "./IBeverage";
 
 class Espresso implements IBeverage {
-	getCoast(): number {
+	getCost(): number {
 		return 60
 	}
 

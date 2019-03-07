@@ -12,7 +12,7 @@ class Tea implements IBeverage {
 		this._type = type;
 	}
 
-	getCoast(): number {
+	getCost(): number {
 		return 30
 	}
 

@@ -36,7 +36,8 @@ class AddCondiment implements ICommand {
 			const args = matchResult[3];
 			for (const creator of condimentCreators) {
 				if (creator.is(condiment)) {
-					this._order.addCondiment(creator.create(args));
+					const newBeverage = creator.create(args)(this._order.popLastBeverage())
+					this._order.addBeverage(newBeverage);
 					return
 				}
 			}
@@ -45,11 +46,9 @@ class AddCondiment implements ICommand {
 	}
 
 	help(): string {
-		return `add <
-${condimentCreators
-			.map(creator => `	${creator.help()}`)
-			.join('|\n')}
->\n`;
+		return `add <\n${condimentCreators
+			.map(creator => ` ${creator.help()}`)
+			.join('|\n')}>\n`;
 	}
 
 	is(command: string): boolean {

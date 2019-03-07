@@ -1,15 +1,17 @@
-import {ICondiment} from "./ICondiment";
+import {BeverageDecorator} from "./BeverageDecorator";
+import {IBeverage} from "../beverage/IBeverage";
 
-class ChocolateCrumbs implements ICondiment {
-	constructor(mass: number) {
+class ChocolateCrumbs extends BeverageDecorator {
+	constructor(mass: number, beverage: IBeverage) {
+		super(beverage);
 		this._mass = mass;
 	}
 
-	getCoast(): number {
+	protected _getCondimentCost(): number {
 		return this._mass * 2;
 	}
 
-	getDescription(): string {
+	protected _getCondimentDescription(): string {
 		return `chocolate crumbs ${this._mass}g`;
 	}
 

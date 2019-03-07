@@ -1,21 +1,23 @@
-import {ICondiment} from "./ICondiment";
+import {IBeverage} from "../beverage/IBeverage";
+import {BeverageDecorator} from "./BeverageDecorator";
 
 enum IceCubesType {
 	dry = 'dry',
 	water = 'water',
 }
 
-class IceCubes implements ICondiment {
-	constructor(quantity: number, type: IceCubesType) {
+class IceCubes extends BeverageDecorator {
+	constructor(quantity: number, type: IceCubesType, beverage: IBeverage) {
+		super(beverage);
 		this._quantity = quantity;
 		this._type = type;
 	}
 
-	getCoast(): number {
+	protected _getCondimentCost(): number {
 		return this._quantity * (this._type == IceCubesType.dry ? 10 : 5);
 	}
 
-	getDescription(): string {
+	protected _getCondimentDescription(): string {
 		return `${this._type} ice cubes x${this._quantity}`;
 	}
 

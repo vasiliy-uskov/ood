@@ -1,5 +1,4 @@
 import {MassExtractor, QuantityExtractor, TypeExtractor} from "./ArgsExtractors";
-import {ICondiment} from "../../condiment/ICondiment";
 import {ChocolateCrumbs} from "../../condiment/ChocolateCrumbs";
 import {Cinnamon} from "../../condiment/Cinnamon";
 import {CoconutFlakes} from "../../condiment/CoconutFlakes";
@@ -9,17 +8,18 @@ import {Syrup, SyrupType} from "../../condiment/Syrop";
 import {Liquor, LiquorType} from "../../condiment/Liquor";
 import {Cream} from "../../condiment/Cream";
 import {ChocolateSlices} from "../../condiment/ChocolateSlices";
+import {IBeverage} from "../../beverage/IBeverage";
 
 export interface ICondimentCreator {
-	create(args: string): ICondiment;
+	create(args: string): (beverage: IBeverage) => IBeverage;
 	help(): string;
 	is(condimentType: string): boolean;
 }
 
 export class ChocolateCrumbsCreator implements ICondimentCreator {
-	create(args: string): ChocolateCrumbs {
+	create(args: string): (beverage: IBeverage) => IBeverage {
 		const mass = this._massExtractor.extract(args);
-		return new ChocolateCrumbs(mass);
+		return (beverage: IBeverage) => new ChocolateCrumbs(mass, beverage);
 	}
 
 	help(): string {
@@ -34,8 +34,8 @@ export class ChocolateCrumbsCreator implements ICondimentCreator {
 }
 
 export class CinnamonCreator implements ICondimentCreator {
-	create(args: string): Cinnamon {
-		return new Cinnamon();
+	create(args: string): (beverage: IBeverage) => IBeverage {
+		return (beverage: IBeverage) => new Cinnamon(beverage);
 	}
 
 	help(): string {
@@ -48,9 +48,9 @@ export class CinnamonCreator implements ICondimentCreator {
 }
 
 export class CoconutFlakesCreator implements ICondimentCreator {
-	create(args: string): CoconutFlakes {
+	create(args: string): (beverage: IBeverage) => IBeverage {
 		const mass = this._massExtractor.extract(args);
-		return new CoconutFlakes(mass);
+		return (beverage: IBeverage) => new CoconutFlakes(mass, beverage);
 	}
 
 	help(): string {
@@ -65,9 +65,9 @@ export class CoconutFlakesCreator implements ICondimentCreator {
 }
 
 export class LemonCreator implements ICondimentCreator {
-	create(args: string): Lemon {
+	create(args: string): (beverage: IBeverage) => IBeverage {
 		const quantity = this._quantityExtractor.extract(args);
-		return new Lemon(quantity);
+		return (beverage: IBeverage) => new Lemon(quantity, beverage);
 	}
 
 	help(): string {
@@ -82,10 +82,10 @@ export class LemonCreator implements ICondimentCreator {
 }
 
 export class IceCubesCreator implements ICondimentCreator {
-	create(args: string): IceCubes {
+	create(args: string): (beverage: IBeverage) => IBeverage {
 		const type = this._typeExtractor.extract(args);
 		const quantity = this._quantityExtractor.extract(args);
-		return new IceCubes(quantity, type);
+		return (beverage: IBeverage) => new IceCubes(quantity, type, beverage);
 	}
 
 	help(): string {
@@ -104,9 +104,9 @@ export class IceCubesCreator implements ICondimentCreator {
 }
 
 export class SyrupCreator implements ICondimentCreator {
-	create(args: string): Syrup {
+	create(args: string): (beverage: IBeverage) => IBeverage {
 		const type = this._typeExtractor.extract(args);
-		return new Syrup(type);
+		return (beverage: IBeverage) => new Syrup(type, beverage);
 	}
 
 	help(): string {
@@ -124,8 +124,8 @@ export class SyrupCreator implements ICondimentCreator {
 }
 
 export class CreamCreator implements ICondimentCreator {
-	create(args: string): Cream {
-		return new Cream();
+	create(args: string): (beverage: IBeverage) => IBeverage {
+		return (beverage: IBeverage) => new Cream(beverage);
 	}
 
 	help(): string {
@@ -138,9 +138,9 @@ export class CreamCreator implements ICondimentCreator {
 }
 
 export class ChocolateSlicesCreator implements ICondimentCreator {
-	create(args: string): ChocolateSlices {
+	create(args: string): (beverage: IBeverage) => IBeverage {
 		const quantity = this._quantityExtractor.extract(args);
-		return new ChocolateSlices(quantity);
+		return (beverage: IBeverage) => new ChocolateSlices(quantity, beverage);
 	}
 
 	help(): string {
@@ -155,9 +155,9 @@ export class ChocolateSlicesCreator implements ICondimentCreator {
 }
 
 export class LiquorCreator implements ICondimentCreator {
-	create(args: string): Liquor {
+	create(args: string): (beverage: IBeverage) => IBeverage {
 		const type = this._typeExtractor.extract(args);
-		return new Liquor(type);
+		return (beverage: IBeverage) => new Liquor(type, beverage);
 	}
 
 	help(): string {

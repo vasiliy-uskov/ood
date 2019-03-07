@@ -1,15 +1,17 @@
-import {ICondiment} from "./ICondiment";
+import {IBeverage} from "../beverage/IBeverage";
+import {BeverageDecorator} from "./BeverageDecorator";
 
-class Lemon implements ICondiment {
-	constructor(quantity: number) {
+class Lemon extends BeverageDecorator {
+	constructor(quantity: number, beverage: IBeverage) {
+		super(beverage);
 		this._quantity = quantity;
 	}
 
-	getCoast(): number {
+	protected _getCondimentCost(): number {
 		return this._quantity * 10;
 	}
 
-	getDescription(): string {
+	protected _getCondimentDescription(): string {
 		return `lemon x${this._quantity}`;
 	}
 

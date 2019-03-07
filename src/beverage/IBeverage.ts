@@ -1,6 +1,6 @@
 interface IBeverage {
 	getDescription(): string;
-	getCoast(): number;
+	getCost(): number;
 }
 
 export {IBeverage}

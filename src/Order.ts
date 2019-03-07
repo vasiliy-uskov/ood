@@ -1,28 +1,26 @@
 import {IBeverage} from "./beverage/IBeverage";
-import {ICondiment} from "./condiment/ICondiment";
-import {BeverageDecorator} from "./BeverageDecorator";
 
 class Order {
 	addBeverage(beverage: IBeverage) {
 		this._beverages.push(beverage)
 	}
 
-	addCondiment(condiment: ICondiment): void {
+	popLastBeverage(): IBeverage {
 		if (!this._beverages.length) {
 			throw new Error('No chosen beverage\n')
 		}
-		this._beverages.push(new BeverageDecorator(this._beverages.pop(), condiment));
+		return this._beverages.pop()
 	}
 
 	pay(money: number): boolean {
-		this._payed = money >= this.getCoast();
-		return this._payed;
+		this._paid = money >= this.getCost();
+		return this._paid;
 	}
 
-	getCoast(): number {
+	getCost(): number {
 		return this._beverages
-			.map(beverage => beverage.getCoast())
-			.reduce((coast1, coast2) => coast1 + coast2)
+			.map(beverage => beverage.getCost())
+			.reduce((cost1, cost2) => cost1 + cost2)
 	}
 
 	getDescription(): string {
@@ -32,7 +30,7 @@ class Order {
 	}
 
 	private _beverages: Array<IBeverage> = [];
-	private _payed = false;
+	private _paid = false;
 }
 
 export {Order}

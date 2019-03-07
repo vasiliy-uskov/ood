@@ -6,7 +6,7 @@ class Capuccino implements IBeverage {
 		this._portionSize = portion;
 	}
 
-	getCoast(): number {
+	getCost(): number {
 		return this._portionSize == Portion.standard ? 80 : 60;
 	}
 

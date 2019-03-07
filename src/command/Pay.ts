@@ -13,7 +13,7 @@ class Pay implements ICommand {
 		}
 		const payed = this._order.pay(+matchResult[1]);
 		if (!payed) {
-			throw new Error(`Not enough money. You need ${this._order.getCoast()}`)
+			throw new Error(`Not enough money. You need ${this._order.getCost()}`)
 		}
 	}
 

@@ -23,13 +23,13 @@ class AddBeverage implements ICommand {
 	}
 
 	execute(command: string) {
-		const matchResult = command.toLowerCase().match(/make (\w+)? ?(\w+)/);
+		const matchResult = command.toLowerCase().match(/make (?:(\w+) )?(\w+)/);
 		if (matchResult) {
 			const args = matchResult[1];
-			const type = matchResult[2];
+			const type = matchResult[2] || matchResult[1];
 			for (const creator of beverageCreators) {
 				if (creator.is(type)) {
-					this._order.addBeverage(creator.create(args))
+					this._order.addBeverage(creator.create(args));
 					return;
 				}
 			}
@@ -38,11 +38,9 @@ class AddBeverage implements ICommand {
 	}
 
 	help(): string {
-		return `make  <
-${beverageCreators
-			.map(creator => `	${creator.help()}`)
-			.join('|\n')}
->\n`
+		return `make\n<${beverageCreators
+			.map(creator => ` ${creator.help()}`)
+			.join('|\n')}>\n`
 	}
 
 	is(command: string): boolean {

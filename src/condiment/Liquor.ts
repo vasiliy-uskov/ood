@@ -1,20 +1,22 @@
-import {ICondiment} from "./ICondiment";
+import {IBeverage} from "../beverage/IBeverage";
+import {BeverageDecorator} from "./BeverageDecorator";
 
 enum LiquorType {
 	nuts = 'nuts',
 	chocolate = 'chocolate',
 }
 
-class Liquor implements ICondiment {
-	constructor(type: LiquorType) {
+class Liquor extends BeverageDecorator {
+	constructor(type: LiquorType, beverage: IBeverage) {
+		super(beverage);
 		this._type = type;
 	}
 
-	getCoast(): number {
+	protected _getCondimentCost(): number {
 		return 50;
 	}
 
-	getDescription(): string {
+	protected _getCondimentDescription(): string {
 		return `${this._type} liquor`;
 	}
 

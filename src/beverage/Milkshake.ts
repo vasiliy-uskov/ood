@@ -6,7 +6,7 @@ class Milkshake implements IBeverage {
 		this._portionSize = portionSize;
 	}
 
-	getCoast(): number {
+	getCost(): number {
 		switch (this._portionSize) {
 			case PortionSize.small:
 				return 50;
