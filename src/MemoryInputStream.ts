@@ -12,9 +12,9 @@ export class MemoryInputStream implements IInputStream {
 
 	readBuffer(bytesCount: number): Buffer {
 		const buffer = new Buffer(bytesCount);
-		this._buffer.copy(buffer, 0, this._position, this._position + bytesCount);
+		const copyCount = this._buffer.copy(buffer, 0, this._position, this._position + bytesCount);
 		this._position += bytesCount;
-		return buffer;
+		return buffer.slice(0, copyCount);
 	}
 
 	dispose(): void {}
