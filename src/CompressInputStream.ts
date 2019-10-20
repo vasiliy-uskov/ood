@@ -5,8 +5,16 @@ import {unlinkSync} from "fs"
 import {generateUUIDv4} from "./utils";
 
 export class CompressInputStream implements IInputStream {
-	constructor(inputStream: IInputStream) {
-		this._inputStream = this._compress(inputStream);
+	constructor(inputStream: IInputStream, chunkSize: number) {
+		if (chunkSize % 2)
+		{
+			throw new Error('Compress chunk size must be even')
+		}
+		if (chunkSize < 2)
+		{
+			throw new Error('Compress chunk size must be greater then 2')
+		}
+		this._inputStream = this._compress(inputStream, chunkSize);
 	}
 
 	eof(): boolean {
@@ -22,25 +30,37 @@ export class CompressInputStream implements IInputStream {
 		unlinkSync(this._tempFileName);
 	}
 
-	private _compress(inputStream: IInputStream): IInputStream {
+	private _compress(inputStream: IInputStream, chunkSize: number): IInputStream {
 		const tempOutputStream = new FileOutputStream(this._tempFileName);
 		const maxCountValue = 255;
 		const currentByte = {
 			count: 0,
 			value: -1
 		};
+		let tempOut: Array<number> = [];
 		while (!inputStream.eof()) {
-			const [valueThatWasRead] = inputStream.readBuffer(1);
-			if (valueThatWasRead != currentByte.value || currentByte.count == maxCountValue) {
-				if (currentByte.count > 0) {
-					tempOutputStream.writeBuffer(new Buffer([currentByte.count, currentByte.value]));
+			const inputPart = inputStream.readBuffer(chunkSize);
+			for (const valueThatWasRead of inputPart)
+			{
+				if (valueThatWasRead != currentByte.value || currentByte.count == maxCountValue) {
+					if (tempOut.length == chunkSize) {
+						tempOutputStream.writeBuffer(new Buffer(tempOut));
+						tempOut = [];
+					}
+					if (currentByte.count > 0) {
+						tempOut.push(currentByte.count, currentByte.value)
+					}
+					currentByte.count = 1;
+					currentByte.value = valueThatWasRead;
 				}
-				currentByte.count = 1;
-				currentByte.value = valueThatWasRead;
+				else {
+					currentByte.count++;
+				}
 			}
-			else {
-				currentByte.count++;
-			}
+		}
+		if (tempOut.length)
+		{
+			tempOutputStream.writeBuffer(new Buffer(tempOut));
 		}
 		tempOutputStream.writeBuffer(new Buffer([currentByte.count, currentByte.value]));
 		tempOutputStream.dispose();

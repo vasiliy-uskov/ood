@@ -9,7 +9,7 @@ describe("CompressInputStream", () => {
 			...generateDuplicatesBytes(0x02, 2),
 			...generateDuplicatesBytes(0x03, 4),
 			...generateDuplicatesBytes(0x04, 5),
-		])));
+		])), 200);
 		expect(stream.readBuffer(3)).to.deep.equal(new Buffer([2, 0x02, 4]));
 		expect(stream.readBuffer(1)).to.deep.equal(new Buffer([0x03]));
 		expect(stream.readBuffer(5)).to.deep.equal(new Buffer([5, 0x04]));
@@ -21,7 +21,7 @@ describe("CompressInputStream", () => {
 			...generateDuplicatesBytes(0x02, 255),
 			...generateDuplicatesBytes(0x02, 1),
 			...generateDuplicatesBytes(0x03, 255),
-		])));
+		])), 200);
 		expect(stream.readBuffer(3)).to.deep.equal(new Buffer([255, 0x02, 1]));
 		expect(stream.readBuffer(1)).to.deep.equal(new Buffer([0x02]));
 		expect(stream.readBuffer(2)).to.deep.equal(new Buffer([255, 0x03]));

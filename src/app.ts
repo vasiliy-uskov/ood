@@ -6,6 +6,10 @@ import {simpleTsezarDecrypt, simpleTsezarEncrypt, TranslateInputStream} from "./
 import {CompressInputStream} from "./CompressInputStream";
 import {DecompressInputStream} from "./DecompressInputStream";
 
+
+const CHUNK_SIZE = 100;
+const COMPRESS_CHUNK_SIZE = 2 ** 30;
+
 function getStreamDecoratorByKey(key: string, getArgument: () => string): (arg: IInputStream) => IInputStream {
 	if (key == "--encrypt") {
 		const key = parseInt(getArgument());
@@ -20,15 +24,19 @@ function getStreamDecoratorByKey(key: string, getArgument: () => string): (arg: 
 		}
 	}
 	if (key == "--compress") {
-		return (stream) => new CompressInputStream(stream);
+		return (stream) => new CompressInputStream(stream, COMPRESS_CHUNK_SIZE);
 	}
 	if (key == "--decompress") {
-		return (stream) => new DecompressInputStream(stream);
+		return (stream) => new DecompressInputStream(stream, COMPRESS_CHUNK_SIZE);
 	}
 	return stream => stream
 }
 
 function main(argv: Array<string>): void {
+	process.on('exit', () => {
+		inputStream.dispose();
+		outputStream.dispose();
+	});
 	argv = argv.slice(2); // delete node.exe and scrypt name from arguments array
 
 	const outputStream = new FileOutputStream(argv.pop());
@@ -36,12 +44,9 @@ function main(argv: Array<string>): void {
 	while (argv.length) {
 		inputStream = getStreamDecoratorByKey(argv.shift(), () => argv.shift())(inputStream);
 	}
-	const chunkSize = 100;
 	while (!inputStream.eof()) {
-		outputStream.writeBuffer(inputStream.readBuffer(chunkSize));
+		outputStream.writeBuffer(inputStream.readBuffer(CHUNK_SIZE));
 	}
-	inputStream.dispose();
-	outputStream.dispose();
 }
 
 main(process.argv);

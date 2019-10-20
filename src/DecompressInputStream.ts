@@ -5,8 +5,16 @@ import {unlinkSync} from "fs"
 import {generateDuplicatesBytes, generateUUIDv4} from "./utils";
 
 export class DecompressInputStream implements IInputStream {
-	constructor(inputStream: IInputStream) {
-		this._inputStream = this._decompress(inputStream);
+	constructor(inputStream: IInputStream, chunkSize: number) {
+		if (chunkSize % 2)
+		{
+			throw new Error('Compress chunk size must be even')
+		}
+		if (chunkSize < 2)
+		{
+			throw new Error('Compress chunk size must be greater then 2')
+		}
+		this._inputStream = this._decompress(inputStream, chunkSize);
 	}
 
 	eof(): boolean {
@@ -22,11 +30,23 @@ export class DecompressInputStream implements IInputStream {
 		unlinkSync(this._tempFileName);
 	}
 
-	private _decompress(inputStream: IInputStream): IInputStream {
+	private _decompress(inputStream: IInputStream, chunkSize: number): IInputStream {
 		const tempOutputStream = new FileOutputStream(this._tempFileName);
+		let tempOut: Array<number> = [];
 		while (!inputStream.eof()) {
-			const [count, value] = inputStream.readBuffer(2);
-			tempOutputStream.writeBuffer(new Buffer(generateDuplicatesBytes(value, count)))
+			let tempIn = inputStream.readBuffer(chunkSize);
+			for (let i = 0; i < tempIn.length; i += 2) {
+				const value = tempIn[i + 1];
+				const count = tempIn[i];
+				tempOut.push(...generateDuplicatesBytes(value, count));
+				if (tempOut.length >= chunkSize) {
+					tempOutputStream.writeBuffer(new Buffer(tempOut));
+					tempOut = [];
+				}
+			}
+		}
+		if (tempOut.length) {
+			tempOutputStream.writeBuffer(new Buffer(tempOut));
 		}
 		tempOutputStream.dispose();
 		inputStream.dispose();

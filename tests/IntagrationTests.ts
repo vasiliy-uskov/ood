@@ -12,8 +12,10 @@ describe('integration', () => {
 			new CompressInputStream(
 				new MemoryInputStream(
 					buffer
-				)
-			)
+				),
+				100
+			),
+			100
 		);
 		expect(stream.readBuffer(buffer.length)).to.deep.equal(buffer);
 		expect(stream.eof()).to.deep.equal(true);
@@ -29,8 +31,8 @@ describe('integration', () => {
 		let stream: IInputStream = new MemoryInputStream(buffer);
 		stream = new TranslateInputStream(stream, simpleTsezarEncrypt(3));
 		stream = new TranslateInputStream(stream, simpleTsezarEncrypt(100500));
-		stream = new CompressInputStream(stream);
-		stream = new DecompressInputStream(stream);
+		stream = new CompressInputStream(stream, 100);
+		stream = new DecompressInputStream(stream, 100);
 		stream = new TranslateInputStream(stream, simpleTsezarDecrypt(100500));
 		stream = new TranslateInputStream(stream, simpleTsezarDecrypt(3));
 		expect(stream.readBuffer(buffer.length)).to.deep.equal(buffer);
