@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`return help 1`] = `"InsertImage <позиция>|end <ширина> <высота> <путь к файлу изображения>"`;

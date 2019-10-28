@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`execute log to console help 1`] = `
+"Доступныу команды:
+	DeleteItem <позиция> <текст параграфа>
+	InsertImage <позиция>|end <ширина> <высота> <путь к файлу изображения>
+	InsertParagraph <позиция>|end <текст параграфа>
+	ReplaceText <позиция> <текст параграфа>
+	ResizeImage <позиция> <ширина> <высота>
+	Save <путь>
+	Undo
+	Redo
+	List
+	SetTitle <позиция> <текст параграфа>
+	Help
+
+"
+`;
+
+exports[`return help 1`] = `"Help"`;

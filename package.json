@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc --build",
-    "test": "mocha --require ts-node/register tests/**/*.ts"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -17,12 +17,13 @@
     "url": "https://github.com/vasiliy-uskov/ood/issues"
   },
   "homepage": "https://github.com/vasiliy-uskov/ood#readme",
+  "dependencies": {
+    "@types/jest": "^24.0.12",
+    "jest": "^24.7.1",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.4.5"
+  },
   "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.5",
-    "chai": "^4.2.0",
-    "mocha": "^5.2.0",
-    "ts-node": "^7.0.1",
-    "typescript": "^3.2.2"
+    "@types/node": "^12.11.7"
   }
 }
