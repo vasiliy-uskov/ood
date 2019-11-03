@@ -16,10 +16,10 @@ export class InsertImageCommand {
 		{
 			throw new WrongCommandError(this.help());
 		}
-		const position = parseInt(res[1] || '');
+		const position = parseInt(res[1]);
 		const width = parseInt(res[2]);
 		const height = parseInt(res[3]);
-		const path = res[4] || '';
+		const path = res[4];
 		this._editor.insertImage({width, height}, path, isNaN(position) ? undefined : position);
 	}
 

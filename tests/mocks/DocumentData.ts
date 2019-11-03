@@ -4,6 +4,8 @@ import {Paragraph} from "../../src/model/element/Paragraph";
 import {Image} from "../../src/model/element/Image";
 import {DocumentItem} from "../../src/model/DocumentItem";
 import {Document} from "../../src/model/Document";
+import {IEditor} from "../../src/IEditor";
+import {MockEditor} from "./MockEditor";
 
 export function createImage(size: Size): Image {
 	return {
@@ -23,6 +25,10 @@ export function createDocument(content: Array<DocumentItem>): Document {
 		title: '',
 		content,
 	}
+}
+
+export function createEditor(document: Document = createDocument([])): IEditor {
+	return new MockEditor(document);
 }
 
 const documentWithContent = createDocument([

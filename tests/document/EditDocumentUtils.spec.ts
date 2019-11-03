@@ -1,5 +1,5 @@
 import {deleteItem, insertItem, modifyItem} from "../../src/model/EditDocumentUtils";
-import {createParagraph, documentWithContent, emptyDocument} from "./DocumentData";
+import {createParagraph, documentWithContent, emptyDocument} from "../mocks/DocumentData";
 import {DocumentItem} from "../../src/model/DocumentItem";
 
 describe('insertItem', () => {

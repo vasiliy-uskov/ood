@@ -1,4 +1,4 @@
-import {createDocument, createParagraph, documentWithContent, emptyDocument} from "../document/DocumentData";
+import {createDocument, createParagraph, documentWithContent, emptyDocument} from "../mocks/DocumentData";
 import {DocumentItem} from "../../src/model/DocumentItem";
 import {ReplaceParagraphTextHistoryItem} from "../../src/history/items/ReplaceParagraphTextHistoryItem";
 
@@ -21,4 +21,14 @@ it('insert item at the end index', () => {
 		DocumentItem.fromParagraph(createParagraph(text)),
 		documentWithContent.content[3],
 	]));
+});
+
+it('do noting on commit', () => {
+	const item = new ReplaceParagraphTextHistoryItem(documentWithContent, text, 2);
+	item.commit();
+});
+
+it('do noting on dispose', () => {
+	const item = new ReplaceParagraphTextHistoryItem(documentWithContent, text, 2);
+	item.dispose();
 });

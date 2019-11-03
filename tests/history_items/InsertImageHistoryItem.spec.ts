@@ -1,4 +1,4 @@
-import {createDocument, createImage, documentWithContent, emptyDocument} from "../document/DocumentData";
+import {createDocument, createImage, documentWithContent, emptyDocument} from "../mocks/DocumentData";
 import {InsertImageHistoryItem} from "../../src/history/items/InsertImageHistoryItem";
 import {DocumentItem} from "../../src/model/DocumentItem";
 

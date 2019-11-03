@@ -1,16 +1,6 @@
 import {History} from "../src/history/History";
-import {createDocument, createParagraph, emptyDocument} from "./document/DocumentData";
-import {generateUUId} from "../src/utils/utils";
-import {DocumentItem} from "../src/model/DocumentItem";
-
-
-class MockHistoryItem {
-	public commit = jest.fn();
-	public dispose = jest.fn();
-	public document = createDocument([
-		DocumentItem.fromParagraph(createParagraph(generateUUId())),
-	]);
-}
+import {emptyDocument} from "./mocks/DocumentData";
+import {MockHistoryItem} from "./mocks/MockHistoryItem";
 
 it('hold empty document on create', () => {
 	const history = new History();
@@ -69,4 +59,14 @@ it('has limited depth', () => {
 	expect(history.currentDocument()).toEqual(mockItem.document);
 	history.undo();
 	expect(history.currentDocument()).toEqual(mockItem.document);
+});
+
+it('dispose all history items on dispose', () => {
+	const history = new History();
+	const mockItem = new MockHistoryItem();
+	history.add(mockItem);
+	expect(mockItem.dispose).not.toBeCalled();
+	history.dispose();
+	expect(mockItem.dispose).toBeCalledTimes(1);
+	expect(mockItem.dispose).toBeCalledWith();
 });

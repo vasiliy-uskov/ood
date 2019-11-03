@@ -10,8 +10,9 @@ exports[`execute log to console help 1`] = `
 	Save <путь>
 	Undo
 	Redo
+	Exit
 	List
-	SetTitle <позиция> <текст параграфа>
+	SetTitle <заголовок>
 	Help
 
 "

@@ -1,18 +1,14 @@
-import {MockEditor} from "./MockEditor";
-import {createDocument, createParagraph} from "../document/DocumentData";
-import {DocumentItem} from "../../src/model/DocumentItem";
+import {createEditor} from "../mocks/DocumentData";
 import {InsertParagraphCommand} from "../../src/command/InsertParagraphCommand";
 
 it('return help', () => {
-	const editor = new MockEditor(createDocument([]));
-	const command = new InsertParagraphCommand(editor);
+	const command = new InsertParagraphCommand(createEditor());
 	expect(command.help()).toMatchSnapshot();
 });
 
 describe('is', () => {
 	it('return true if command start by DeleteItem', () => {
-		const editor = new MockEditor(createDocument([]));
-		const command = new InsertParagraphCommand(editor);
+		const command = new InsertParagraphCommand(createEditor());
 		expect(command.is('InsertParagraph 0 text')).toBe(true);
 		expect(command.is('InsertParagraph ')).toBe(true);
 		expect(command.is('InsertParagraph')).toBe(true);
@@ -23,10 +19,8 @@ describe('is', () => {
 	});
 });
 describe('execute', () => {
-	it('call deleteItem method if parse parameters', () => {
-		const editor = new MockEditor(createDocument([
-			DocumentItem.fromParagraph(createParagraph('text')),
-		]));
+	it('call insertParagraph method if parse parameters', () => {
+		const editor = createEditor();
 		const command = new InsertParagraphCommand(editor);
 		expect(editor.insertParagraph).not.toBeCalled();
 		command.execute('InsertParagraph 0 text');
@@ -40,12 +34,9 @@ describe('execute', () => {
 		expect(editor.insertParagraph).toBeCalledWith(' ', undefined);
 	});
 	it('throw error if do not parse parameters', () => {
-		const editor = new MockEditor(createDocument([
-			DocumentItem.fromParagraph(createParagraph('text')),
-		]));
-		const command = new InsertParagraphCommand(editor);
-		expect(editor.deleteItem).not.toBeCalled();
+		const command = new InsertParagraphCommand(createEditor());
 		expect(() => command.execute('InsertParagraph 0 ')).toThrow();
+		expect(() => command.execute('InsertParagraph 0')).toThrow();
 		expect(() => command.execute('InsertParagraph 0a')).toThrow();
 		expect(() => command.execute('InsertParagraph enda')).toThrow();
 	});

@@ -16,8 +16,8 @@ export class InsertParagraphCommand {
 		{
 			throw new WrongCommandError(this.help());
 		}
-		const text = res[2] || '';
-		const position = parseInt(res[1] || '');
+		const text = res[2];
+		const position = parseInt(res[1]);
 		this._editor.insertParagraph(text, isNaN(position) ? undefined : position);
 	}
 

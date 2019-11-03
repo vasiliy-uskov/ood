@@ -1,18 +1,14 @@
-import {MockEditor} from "./MockEditor";
-import {createDocument, createParagraph} from "../document/DocumentData";
+import {createEditor} from "../mocks/DocumentData";
 import {DeleteItemCommand} from "../../src/command/DeleteItemCommand";
-import {DocumentItem} from "../../src/model/DocumentItem";
 
 it('return help', () => {
-	const editor = new MockEditor(createDocument([]));
-	const command = new DeleteItemCommand(editor);
+	const command = new DeleteItemCommand(createEditor());
 	expect(command.help()).toMatchSnapshot();
 });
 
 describe('is', () => {
 	it('return true if command start by DeleteItem', () => {
-		const editor = new MockEditor(createDocument([]));
-		const command = new DeleteItemCommand(editor);
+		const command = new DeleteItemCommand(createEditor());
 		expect(command.is('DeleteItem bla bla')).toBe(true);
 		expect(command.is('DeleteItem')).toBe(true);
 		expect(command.is('DeleteItem')).toBe(true);
@@ -22,9 +18,7 @@ describe('is', () => {
 });
 describe('execute', () => {
 	it('call deleteItem method if parse parameters', () => {
-		const editor = new MockEditor(createDocument([
-			DocumentItem.fromParagraph(createParagraph('text')),
-		]));
+		const editor = createEditor();
 		const command = new DeleteItemCommand(editor);
 		expect(editor.deleteItem).not.toBeCalled();
 		command.execute('DeleteItem 0');
@@ -35,11 +29,7 @@ describe('execute', () => {
 		expect(editor.deleteItem).toBeCalledWith(20);
 	});
 	it('throw error if do not parse parameters', () => {
-		const editor = new MockEditor(createDocument([
-			DocumentItem.fromParagraph(createParagraph('text')),
-		]));
-		const command = new DeleteItemCommand(editor);
-		expect(editor.deleteItem).not.toBeCalled();
+		const command = new DeleteItemCommand(createEditor());
 		expect(() => command.execute('DeleteItem 0a')).toThrow();
 		expect(() => command.execute('DeleteItem  0')).toThrow();
 	});

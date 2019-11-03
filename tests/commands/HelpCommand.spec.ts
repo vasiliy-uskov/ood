@@ -1,5 +1,4 @@
-import {MockEditor} from "./MockEditor";
-import {createDocument} from "../document/DocumentData";
+import {createEditor} from "../mocks/DocumentData";
 import {HelpCommand} from "../../src/command/HelpCommand";
 import {DeleteItemCommand} from "../../src/command/DeleteItemCommand";
 import {InsertImageCommand} from "../../src/command/InsertImageCommand";
@@ -12,6 +11,7 @@ import {RedoCommand} from "../../src/command/RedoCommand";
 import {ListCommand} from "../../src/command/ListCommand";
 import {SetDocumentTitleCommand} from "../../src/command/SetDocumentTitleCommand";
 import {ICommand} from "../../src/command/ICommand";
+import {ExitCommand} from "../../src/command/ExitCommand";
 
 it('return help', () => {
 	const command = new HelpCommand([]);
@@ -19,17 +19,18 @@ it('return help', () => {
 });
 
 function createAllCommands(): Array<ICommand> {
-	const editor = new MockEditor(createDocument([]));
+	const editor = createEditor();
 	const commands: Array<ICommand> = [
 		new DeleteItemCommand(editor),
 		new InsertImageCommand(editor),
 		new InsertParagraphCommand(editor),
 		new ReplaceParagraphTextCommand(editor),
 		new ResizeImageCommand(editor),
-		new SaveDocumentCommand(editor),
+		new SaveDocumentCommand(editor, () => {}),
 		new UndoCommand(editor),
 		new RedoCommand(editor),
-		new ListCommand(editor),
+		new ExitCommand(),
+		new ListCommand(editor, () => {}),
 		new SetDocumentTitleCommand(editor),
 	];
 	commands.push(new HelpCommand(commands));

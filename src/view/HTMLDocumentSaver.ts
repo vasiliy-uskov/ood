@@ -7,20 +7,14 @@ import {join, relative} from "path";
 const DOCUMENT_FILE_NAME = 'index.html';
 const IMAGES_DIR_NAME = 'images';
 
-export class HTMLDocumentView {
-	constructor(destPath: string) {
-		this._destPath = destPath;
-		this._imagesPath = join(this._destPath, IMAGES_DIR_NAME);
+export class HTMLDocumentSaver {
+	public static save(location: string, document: ReadonlyDocument): void {
+		const imagesPath = join(location, IMAGES_DIR_NAME);
+		const destIndexPath = join(location, DOCUMENT_FILE_NAME);
+		writeFileSync(destIndexPath, this._expandDocument(document, location, imagesPath))
 	}
 
-	draw(document: ReadonlyDocument): void {
-		writeFileSync(
-			join(this._destPath, DOCUMENT_FILE_NAME),
-			this._expandDocument(document)
-		)
-	}
-
-	private _expandDocument(document: ReadonlyDocument): string {
+	private static _expandDocument(document: ReadonlyDocument, destPath: string, imagesPath: string): string {
 		return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +27,7 @@ export class HTMLDocumentView {
 			const paragraph = item.toParagraph();
 			if (image)
 			{
-				return this._expandImage(image);
+				return this._expandImage(image, destPath, imagesPath);
 			}
 			if (paragraph)
 			{
@@ -45,12 +39,12 @@ export class HTMLDocumentView {
 </html>`;
 	}
 
-	private _expandParagraph(paragraph: Paragraph) {
+	private static _expandParagraph(paragraph: Paragraph) {
 		return `<p>${this._escapeText(paragraph.text)}</p>`;
 	}
 
-	private _expandImage(image: ReadonlyImage): string {
-		const src = relative(this._destPath, image.img.save(this._imagesPath));
+	private static _expandImage(image: ReadonlyImage, destPath: string, imagesPath: string): string {
+		const src = relative(destPath, image.img.save(imagesPath));
 		return `<img
 					src="${src}"
 					width="${image.size.width}"
@@ -59,13 +53,10 @@ export class HTMLDocumentView {
 				/>`
 	}
 
-	private _escapeText(text: string) {
+	private static _escapeText(text: string) {
 		return text
 			.replace(/&/g,'&amp;')
 			.replace(/</g,'&lt;')
 			.replace(/>/g,'&gt;')
 	}
-
-	private readonly _destPath: string;
-	private readonly _imagesPath: string;
 }

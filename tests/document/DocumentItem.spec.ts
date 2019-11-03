@@ -1,5 +1,5 @@
 import {DocumentItem} from "../../src/model/DocumentItem";
-import {createImage, createParagraph} from "./DocumentData";
+import {createImage, createParagraph} from "../mocks/DocumentData";
 
 it('hold image if it was created by image', () => {
 	const image = createImage({

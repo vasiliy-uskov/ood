@@ -16,7 +16,7 @@ export class ResizeImageCommand {
 		{
 			throw new WrongCommandError(this.help());
 		}
-		const position = parseInt(res[1] || '');
+		const position = parseInt(res[1]);
 		const width = parseInt(res[2]);
 		const height = parseInt(res[3]);
 		this._editor.resizeImage({width, height}, position);

@@ -1,4 +1,4 @@
-import {createDocument, createImage, emptyDocument} from "../document/DocumentData";
+import {createDocument, createImage, createParagraph, emptyDocument} from "../mocks/DocumentData";
 import {DocumentItem} from "../../src/model/DocumentItem";
 import {Document} from "../../src/model/Document";
 import {ResizeImageHistoryItem} from "../../src/history/items/ResizeImageHistoryItem";
@@ -14,6 +14,10 @@ const documentWithContent = createDocument([
 	DocumentItem.fromImage(createImage(oldSize)),
 	DocumentItem.fromImage(createImage(oldSize)),
 	DocumentItem.fromImage(createImage(oldSize)),
+]);
+
+const documentWithParagraph = createDocument([
+	DocumentItem.fromParagraph(createParagraph('text')),
 ]);
 
 function getImage(document: Document, index: number): Image {
@@ -40,6 +44,7 @@ it('throw exception, when try to create by invalid index', () => {
 	expect(() => new ResizeImageHistoryItem(emptyDocument, newSize, 0)).toThrow();
 	expect(() => new ResizeImageHistoryItem(emptyDocument, newSize, -1)).toThrow();
 	expect(() => new ResizeImageHistoryItem(emptyDocument, newSize, 1)).toThrow();
+	expect(() => new ResizeImageHistoryItem(documentWithParagraph, newSize, 0)).toThrow();
 	expect(() => new ResizeImageHistoryItem(documentWithContent, newSize, -1)).toThrow();
 	expect(() => new ResizeImageHistoryItem(documentWithContent, newSize, documentWithContent.content.length)).toThrow();
 	expect(() => new ResizeImageHistoryItem(documentWithContent, newSize, documentWithContent.content.length + 1)).toThrow();
@@ -56,4 +61,14 @@ it('insert item at the end index', () => {
 	const oldItem = getImage(documentWithContent, 2);
 	expect(newItem.size).toEqual(newSize);
 	expect(oldItem.img).toEqual(newItem.img);
+});
+
+it('do noting on commit', () => {
+	const item = new ResizeImageHistoryItem(documentWithContent, newSize, 2);
+	item.commit();
+});
+
+it('do noting on dispose', () => {
+	const item = new ResizeImageHistoryItem(documentWithContent, newSize, 2);
+	item.dispose();
 });

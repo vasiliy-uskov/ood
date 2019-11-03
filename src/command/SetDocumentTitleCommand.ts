@@ -20,7 +20,7 @@ export class SetDocumentTitleCommand {
 	}
 
 	help(): string {
-		return 'SetTitle <позиция> <текст параграфа>';
+		return 'SetTitle <заголовок>';
 	}
 	private _editor: IEditor;
 }

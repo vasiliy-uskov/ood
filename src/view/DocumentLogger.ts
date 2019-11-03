@@ -2,9 +2,9 @@ import {ReadonlyDocument} from "../model/Document";
 import {ReadonlyImage} from "../model/element/Image";
 import {Paragraph} from "../model/element/Paragraph";
 
-export class ConsoleDocumentView {
-	public draw(document: ReadonlyDocument): void {
-		ConsoleDocumentView._logDocument(document)
+export class DocumentLogger {
+	public static log(document: ReadonlyDocument): void {
+		this._logDocument(document)
 	}
 
 	private static _logDocument(document: ReadonlyDocument) {

@@ -1,9 +1,10 @@
 import {IEditor} from "../IEditor";
-import {ConsoleDocumentView} from "../view/ConsoleDocumentView";
+import {ReadonlyDocument} from "../model/Document";
 
 export class ListCommand {
-	constructor(editor: IEditor) {
+	constructor(editor: IEditor, printDocumentFn: (document: ReadonlyDocument) => void) {
 		this._editor = editor;
+		this._printDocumentFn = printDocumentFn;
 	}
 
 	is(command: string): boolean {
@@ -11,7 +12,7 @@ export class ListCommand {
 	}
 
 	execute() {
-		this._documentView.draw(this._editor.document());
+		this._printDocumentFn(this._editor.document());
 	}
 
 	help(): string {
@@ -19,5 +20,5 @@ export class ListCommand {
 	}
 
 	private _editor: IEditor;
-	private _documentView = new ConsoleDocumentView();
+	private _printDocumentFn: (document: ReadonlyDocument) => void;
 }

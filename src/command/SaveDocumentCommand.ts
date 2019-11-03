@@ -1,10 +1,11 @@
 import {IEditor} from "../IEditor";
-import {HTMLDocumentView} from "../view/HTMLDocumentView";
 import {WrongCommandError} from "./WrongCommandError";
+import {ReadonlyDocument} from "../model/Document";
 
 export class SaveDocumentCommand {
-	constructor(editor: IEditor) {
+	constructor(editor: IEditor, saveDocumentFn: (location: string, document: ReadonlyDocument) => void) {
 		this._editor = editor;
+		this._saveDocumentFn = saveDocumentFn;
 	}
 
 	is(command: string): boolean {
@@ -17,7 +18,7 @@ export class SaveDocumentCommand {
 		{
 			throw new WrongCommandError(this.help());
 		}
-		(new HTMLDocumentView(res[1])).draw(this._editor.document());
+		this._saveDocumentFn(res[1], this._editor.document());
 	}
 
 	help(): string {
@@ -25,4 +26,5 @@ export class SaveDocumentCommand {
 	}
 
 	private _editor: IEditor;
+	private _saveDocumentFn: (location: string, document: ReadonlyDocument) => void;
 }

@@ -1,5 +1,6 @@
-import {createDocumentByImage, createImage, documentWithContent, emptyDocument} from "../document/DocumentData";
+import {createDocument, createDocumentByImage, createImage, createParagraph, documentWithContent, emptyDocument} from "../mocks/DocumentData";
 import {DeleteDocumentItemHistoryItem} from "../../src/history/items/DeleteDocumentItemHistoryItem";
+import {DocumentItem} from "../../src/model/DocumentItem";
 
 it('throw exception, when try to create by invalid index', () => {
 	expect(() => new DeleteDocumentItemHistoryItem(emptyDocument, 0)).toThrow();
@@ -19,6 +20,13 @@ it('dispose image on commit', () => {
 	expect(image.img.dispose).not.toBeCalled();
 	item.commit();
 	expect(image.img.dispose).toBeCalledTimes(1);
+});
+
+it('do noting on commit paragraph deleting', () => {
+	const item = new DeleteDocumentItemHistoryItem(createDocument([
+		DocumentItem.fromParagraph(createParagraph('text')),
+	]), 0);
+	item.commit();
 });
 
 it('do not dispose image on dispose', () => {

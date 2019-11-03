@@ -1,4 +1,4 @@
-import {createDocument, createParagraph, documentWithContent} from "../document/DocumentData";
+import {createDocument, createParagraph, documentWithContent} from "../mocks/DocumentData";
 import {InsertParagraphHistoryItem} from "../../src/history/items/InsertParagraphHistoryItem";
 import {DocumentItem} from "../../src/model/DocumentItem";
 
@@ -18,6 +18,16 @@ it('insert item at the end index', () => {
 		documentWithContent.content[2],
 		documentWithContent.content[3],
 	]));
+});
+
+it('do noting on commit', () => {
+	const item = new InsertParagraphHistoryItem(documentWithContent, text, 2);
+	item.commit();
+});
+
+it('do noting on dispose', () => {
+	const item = new InsertParagraphHistoryItem(documentWithContent, text, 2);
+	item.dispose();
 });
 
 it('insert item at the end if index is not specified', () => {
