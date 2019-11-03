@@ -8,7 +8,7 @@ export class DocumentLogger {
 	}
 
 	private static _logDocument(document: ReadonlyDocument) {
-		console.log('Title: ', document.title);
+		console.log(`Title: ${document.title}`);
 		document.content.forEach((item, index) => {
 			const image = item.toImage();
 			const paragraph = item.toParagraph();

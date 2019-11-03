@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`escape html text 1`] = `"<p>&lt;p&gt;&amp;nbsp;&lt;/p&gt;</p>"`;
+
+exports[`expand empty paragraph 1`] = `"<p></p>"`;
+
+exports[`expand not empty paragraph 1`] = `"<p>Some text</p>"`;

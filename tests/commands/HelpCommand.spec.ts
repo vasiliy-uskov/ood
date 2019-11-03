@@ -12,6 +12,7 @@ import {ListCommand} from "../../src/command/ListCommand";
 import {SetDocumentTitleCommand} from "../../src/command/SetDocumentTitleCommand";
 import {ICommand} from "../../src/command/ICommand";
 import {ExitCommand} from "../../src/command/ExitCommand";
+import {ConsoleLogMock} from "../mocks/ConsoleLogMock";
 
 it('return help', () => {
 	const command = new HelpCommand([]);
@@ -49,11 +50,9 @@ describe('is', () => {
 describe('execute', () => {
 	it('log to console help', () => {
 		const command = new HelpCommand(createAllCommands());
-		let res = '';
-		console.log = (...args: Array<string>) => {
-			res = res + args.join(' ') + '\n';
-		};
+		ConsoleLogMock.startMock();
 		command.execute();
-		expect(res).toMatchSnapshot();
+		expect(ConsoleLogMock.result()).toMatchSnapshot();
+		ConsoleLogMock.stopMock();
 	});
 });

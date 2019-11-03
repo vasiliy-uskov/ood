@@ -9,8 +9,8 @@ export class File implements IResource, IReadonlyResource {
 	constructor(src: string) {
 		const fileData = parse(src);
 		this._destFileName = `${generateUUId()}${fileData.ext}`;
-		this._srcFileName = fileData.base;
-		this._createTempDir();
+		this._srcFileName = src;
+		File._createTempDir();
 		copyFileSync(src, join(TEMP_FILE_DIR, this._destFileName))
 	}
 
@@ -37,7 +37,7 @@ export class File implements IResource, IReadonlyResource {
 		}
 	}
 
-	private _createTempDir(): void {
+	private static _createTempDir(): void {
 		if (!existsSync(TEMP_FILE_DIR))
 		{
 			mkdirSync(TEMP_FILE_DIR);

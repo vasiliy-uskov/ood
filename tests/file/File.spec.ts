@@ -44,3 +44,10 @@ it('can be saved in dir', () => {
 	unlinkSync(dest);
 	file.dispose();
 });
+
+it('can return source path', () => {
+	const src = join(__dirname, "input1.txt");
+	const file = new File(src);
+	expect(file.srcFileName()).toBe(src);
+	file.dispose();
+});

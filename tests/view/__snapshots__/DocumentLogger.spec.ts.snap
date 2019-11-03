@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`log document with content 1`] = `
+"Title: Some title
+0. Paragraph: Some text
+1. Image: 100 100 some_image.mock
+"
+`;
+
+exports[`log document with title and without content 1`] = `
+"Title: Some title
+"
+`;
+
+exports[`log empty document 1`] = `
+"Title: 
+"
+`;

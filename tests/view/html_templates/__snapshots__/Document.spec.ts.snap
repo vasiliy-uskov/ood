@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`escape js injection 1`] = `
+"<!DOCTYPE html>
+<html lang=\\"en\\">
+<head>
+	<meta charset=\\"UTF-8\\">
+	<title>&lt;script&gt;alert('&amp;nbsp;')&lt;/script&gt;</title>
+</head>
+<body>
+	
+</body>
+</html>"
+`;
+
+exports[`expand empty paragraph 1`] = `
+"<!DOCTYPE html>
+<html lang=\\"en\\">
+<head>
+	<meta charset=\\"UTF-8\\">
+	<title>Empty document</title>
+</head>
+<body>
+	
+</body>
+</html>"
+`;
+
+exports[`expand not empty paragraph 1`] = `
+"<!DOCTYPE html>
+<html lang=\\"en\\">
+<head>
+	<meta charset=\\"UTF-8\\">
+	<title>Not empty</title>
+</head>
+<body>
+	<p>&lt;script&gt;alert('&amp;nbsp;')&lt;/script&gt;</p><img src=\\"./location/src.png\\" width=\\"100\\" height=\\"100\\" alt=\\"\\" />
+</body>
+</html>"
+`;

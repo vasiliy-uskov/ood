@@ -11,3 +11,10 @@ export function generateUUId(): string {
 	}
 	return id;
 }
+
+export function escapeHtmlText(text: string) {
+	return text
+		.replace(/&/g,'&amp;')
+		.replace(/</g,'&lt;')
+		.replace(/>/g,'&gt;');
+}

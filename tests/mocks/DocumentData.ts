@@ -1,4 +1,4 @@
-import {RandomNameMockFile} from "./RandomNameMockFile";
+import {RandomNameMockFile, StaticNameMockFile} from "./FileMock";
 import {Size} from "../../src/utils/Size";
 import {Paragraph} from "../../src/model/element/Paragraph";
 import {Image} from "../../src/model/element/Image";
@@ -13,6 +13,14 @@ export function createImage(size: Size): Image {
 		img: new RandomNameMockFile(),
 	}
 }
+
+export function createStaticNameImage(name: string, size: Size): Image {
+	return {
+		size: size,
+		img: new StaticNameMockFile(name),
+	}
+}
+
 export function createParagraph(text: string): Paragraph {
 	return {text};
 }

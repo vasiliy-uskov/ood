@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`expand image 1`] = `"<img src=\\"./location/img.png\\" width=\\"100\\" height=\\"100\\" alt=\\"\\" />"`;
