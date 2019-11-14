@@ -1,42 +1,66 @@
-import {SvgCanvas} from "./SvgCanvas";
-import {Painter} from "./Pinter";
-import {Designer} from "./Designer";
-import {ShapeFactory} from "./ShapeFactory";
+import {SvgCanvas} from "./canvas/SvgCanvas";
+import {Painter} from "./painter/Painter";
+import {IEditableShape} from "./shape/IShape";
+import {EllipseShape} from "./shape/EllipseShape";
+import {Color} from "./canvas/Color";
+import {Vec2} from "./utils/Vec2";
+import {CompositeShape} from "./shape/CompositeShape";
+import {RectangleShape} from "./shape/RectangleShape";
+import {TriangleShape} from "./shape/TriangleShape";
 
-const canvas = new SvgCanvas(50, 50);
-const painter = new Painter();
-const designer = new Designer(new ShapeFactory());
-painter.drawPicture(designer.createDraft([
-    {
-        type: "ellipse",
-        color: 0,
-        center: {x: 20, y: 20},
-        radiusX: 10,
-        radiusY: 10
-    },
-    {
-        type: "triangle",
-        color: 1,
-        vertex1: {x: 0, y: 20},
-        vertex2: {x: 20, y: 0},
-        vertex3: {x: 0, y: 0},
-    },
-    {
-        type: "rectangle",
-        color: 1,
-        vertex1: {x: 0, y: 0},
-        vertex2: {x: 20, y: 20},
-    },
-    {
-        type: "polygon",
-        color: 1,
-        vertexes: [
-            {x: 0, y: 10},
-            {x: 10, y: 10},
-            {x: 10, y: 20},
-            {x: 20, y: 20},
-            {x: 20, y: 0},
-        ]
-    }
-]), canvas);
+function getSun(centerPosition: Vec2, size: number): IEditableShape {
+	const shapeStyle = {
+		fillColor: Color.yellow(),
+	};
+	return EllipseShape.circle(shapeStyle, centerPosition, size / 2)
+}
+
+function getHouse(leftTopPosition: Vec2, width: number, height: number): IEditableShape {
+	const bodyShapeStyle = {
+		fillColor: Color.black(),
+	};
+	const roofShapeStyle = {
+		fillColor: Color.red(),
+	};
+	const windowShapeStyle = {
+		fillColor: Color.blue(),
+		lineStyle: {
+			lineColor: Color.brown(),
+			lineWeight: 4,
+		},
+	};
+	const roofHeight = height * 2 / 5;
+	const bodyOffset = width * 1 / 6;
+
+	const bodyWidth = width - bodyOffset * 2;
+	const bodyHeight = height - roofHeight;
+	const bodyPosition = new Vec2(bodyOffset, roofHeight);
+
+	const windowOffsetX = bodyOffset * 2;
+	const windowOffsetY = bodyOffset + roofHeight;
+	const windowPosition = new Vec2(windowOffsetX, windowOffsetY);
+	const windowWidth = width - windowOffsetX * 2;
+	const windowHeight = bodyHeight - bodyOffset * 2;
+
+	const house = new CompositeShape([
+		RectangleShape.rectangle(bodyShapeStyle, bodyPosition, bodyWidth, bodyHeight),
+		new TriangleShape(roofShapeStyle, [
+			new Vec2(0, roofHeight),
+			new Vec2(width / 2, 0),
+			new Vec2(width, roofHeight),
+		]),
+		RectangleShape.rectangle(windowShapeStyle, windowPosition, windowWidth, windowHeight),
+	]);
+	return house.translate(leftTopPosition);
+}
+
+const canvasWidth = 200;
+const canvasHeight = 200;
+const canvas = new SvgCanvas(canvasWidth, canvasHeight);
+const slide = new CompositeShape([
+	RectangleShape.rectangle({fillColor: Color.blue()}, new Vec2(0, 0), canvasWidth, canvasHeight),
+	getHouse(new Vec2(40, canvasHeight - 120), 100, 120),
+	getSun(new Vec2(170, 30), 20),
+]);
+Painter.drawFigure(slide.figure(), canvas);
 console.log(canvas.getPicture());
