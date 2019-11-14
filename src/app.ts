@@ -8,14 +8,14 @@ import {CompositeShape} from "./shape/CompositeShape";
 import {RectangleShape} from "./shape/RectangleShape";
 import {TriangleShape} from "./shape/TriangleShape";
 
-function getSun(centerPosition: Vec2, size: number): IEditableShape {
+function createSun(centerPosition: Vec2, size: number): IEditableShape {
 	const shapeStyle = {
 		fillColor: Color.yellow(),
 	};
 	return EllipseShape.circle(shapeStyle, centerPosition, size / 2)
 }
 
-function getHouse(leftTopPosition: Vec2, width: number, height: number): IEditableShape {
+function createHouse(leftTopPosition: Vec2, width: number, height: number): IEditableShape {
 	const bodyShapeStyle = {
 		fillColor: Color.black(),
 	};
@@ -59,8 +59,8 @@ const canvasHeight = 200;
 const canvas = new SvgCanvas(canvasWidth, canvasHeight);
 const slide = new CompositeShape([
 	RectangleShape.rectangle({fillColor: Color.blue()}, new Vec2(0, 0), canvasWidth, canvasHeight),
-	getHouse(new Vec2(40, canvasHeight - 120), 100, 120),
-	getSun(new Vec2(170, 30), 20),
+	createHouse(new Vec2(40, canvasHeight - 120), 100, 120),
+	createSun(new Vec2(170, 30), 20),
 ]);
 Painter.drawFigure(slide.figure(), canvas);
 console.log(canvas.getPicture());
