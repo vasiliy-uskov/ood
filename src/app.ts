@@ -50,6 +50,8 @@ function createHouse(leftTopPosition: Vec2, width: number, height: number): IEdi
 			new Vec2(width, roofHeight),
 		]),
 		RectangleShape.rectangle(windowShapeStyle, windowPosition, windowWidth, windowHeight),
+		RectangleShape.rectangle(windowShapeStyle, windowPosition, windowWidth, windowHeight / 3),
+		RectangleShape.rectangle(windowShapeStyle, windowPosition, windowWidth / 2, windowHeight / 3),
 	]);
 	return house.translate(leftTopPosition);
 }
@@ -58,7 +60,7 @@ const canvasWidth = 200;
 const canvasHeight = 200;
 const canvas = new SvgCanvas(canvasWidth, canvasHeight);
 const slide = new CompositeShape([
-	RectangleShape.rectangle({fillColor: Color.blue()}, new Vec2(0, 0), canvasWidth, canvasHeight),
+	RectangleShape.rectangle({fillColor: Color.deepBlue()}, new Vec2(0, 0), canvasWidth, canvasHeight),
 	createHouse(new Vec2(40, canvasHeight - 120), 100, 120),
 	createSun(new Vec2(170, 30), 20),
 ]);

@@ -11,7 +11,7 @@ class Color {
 	}
 
 	toRGBA() {
-		return `rgba(${this._color.r.toString(10)}, ${this._color.g.toString(10)}, ${this._color.b.toString(10)})`;
+		return `rgba(${this._color.r.toString(10)}, ${this._color.g.toString(10)}, ${this._color.b.toString(10)}, ${this._color.a.toString(10)})`;
 	}
 
 	private readonly _color: ColorProps;
@@ -61,10 +61,19 @@ class Color {
 		})
 	}
 
-	static blue(): Color {
+	static deepBlue(): Color {
 		return new Color({
 			r: 0x66,
 			g: 0x66,
+			b: 0xFF,
+			a: 1,
+		})
+	}
+
+	static blue(): Color {
+		return new Color({
+			r: 0xAA,
+			g: 0xAA,
 			b: 0xFF,
 			a: 1,
 		})
