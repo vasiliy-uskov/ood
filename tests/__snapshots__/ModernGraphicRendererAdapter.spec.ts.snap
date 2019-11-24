@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`can draw lines 1`] = `
+"
+<draw>
+	<line fromX=\\"0\\" fromY=\\"0\\" toX=\\"1\\" toY=\\"1\\">
+		<color r=\\"0\\" g=\\"0\\" b=\\"0\\" a=\\"0\\" />
+	</line>
+</draw>"
+`;
+
+exports[`can set color for a lines 1`] = `
+"
+<draw>
+	<line fromX=\\"0\\" fromY=\\"0\\" toX=\\"1\\" toY=\\"1\\">
+		<color r=\\"1\\" g=\\"0\\" b=\\"0\\" a=\\"1\\" />
+	</line>
+</draw>"
+`;
+
+exports[`do not draw empty object, if call close without line 1`] = `""`;
+
+exports[`start new draw object on close 1`] = `
+"
+<draw>
+	<line fromX=\\"0\\" fromY=\\"0\\" toX=\\"1\\" toY=\\"1\\">
+		<color r=\\"0\\" g=\\"0\\" b=\\"0\\" a=\\"0\\" />
+	</line>
+</draw>
+<draw>
+	<line fromX=\\"0\\" fromY=\\"0\\" toX=\\"1\\" toY=\\"1\\">
+		<color r=\\"0\\" g=\\"0\\" b=\\"0\\" a=\\"0\\" />
+	</line>"
+`;
+
+exports[`start new draw object on moveTo 1`] = `
+"
+<draw>
+	<line fromX=\\"0\\" fromY=\\"0\\" toX=\\"1\\" toY=\\"1\\">
+		<color r=\\"0\\" g=\\"0\\" b=\\"0\\" a=\\"0\\" />
+	</line>
+</draw>
+<draw>
+	<line fromX=\\"0\\" fromY=\\"0\\" toX=\\"1\\" toY=\\"1\\">
+		<color r=\\"0\\" g=\\"0\\" b=\\"0\\" a=\\"0\\" />
+	</line>
+</draw>"
+`;
