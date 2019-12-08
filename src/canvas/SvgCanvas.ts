@@ -52,7 +52,7 @@ class SvgCanvas implements ICanvas {
 
 	drawArc(center: Vec2, radiusX: number, radiusY: number, startAngle: number, angle: number, rotation: number) {
 		const drawArc = (startAngle: number, angle: number) => {
-			const rotateTransformation = Transformation.rotate(rotation);
+			const rotateTransformation = Transformation.rotate(rotation).useTransformOrigin(center);
 			const startPoint = rotateTransformation.transform(new Vec2(
 				center.x + Math.cos(startAngle) * radiusX,
 				center.y + Math.sin(startAngle) * radiusY

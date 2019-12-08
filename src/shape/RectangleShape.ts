@@ -1,5 +1,5 @@
 import {FigureStyles} from "../painter/primitives/FigureStyles";
-import {IEditableShape} from "./IShape";
+import {IShape} from "./IShape";
 import {Transformation} from "../utils/Transformation";
 import {Vec2} from "../utils/Vec2";
 import {Figure} from "../painter/primitives/Figure";
@@ -7,7 +7,7 @@ import {PrimitivesType} from "../painter/primitives/PrimitivesType";
 import {getDotsByBasis, transformBasis} from "../utils/utils";
 import {Frame} from "./Frame";
 
-export class RectangleShape implements IEditableShape {
+export class RectangleShape implements IShape {
 	constructor(shapeStyles: FigureStyles, leftTop: Vec2, widthBasis: Vec2, heightBasis: Vec2) {
 		this._shapeStyles = shapeStyles;
 		this._leftTop = leftTop;
@@ -23,7 +23,7 @@ export class RectangleShape implements IEditableShape {
 		return this.rectangle(shapeStyles, leftTop, sideSize, sideSize)
 	}
 
-	setShapeStyles(shapeStyles: FigureStyles): IEditableShape {
+	setShapeStyles(shapeStyles: FigureStyles): IShape {
 		return new RectangleShape(shapeStyles, this._leftTop, this._widthBasis, this._heightBasis);
 	}
 

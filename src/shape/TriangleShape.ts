@@ -1,18 +1,18 @@
 import {FigureStyles} from "../painter/primitives/FigureStyles";
-import {IEditableShape} from "./IShape";
+import {IShape} from "./IShape";
 import {Transformation} from "../utils/Transformation";
 import {Vec2} from "../utils/Vec2";
 import {Figure} from "../painter/primitives/Figure";
 import {PrimitivesType} from "../painter/primitives/PrimitivesType";
 import {Frame} from "./Frame";
 
-export class TriangleShape implements IEditableShape {
+export class TriangleShape implements IShape {
 	constructor(shapeStyles: FigureStyles, vertices: [Vec2, Vec2, Vec2]) {
 		this._shapeStyles = shapeStyles;
 		this._vertices = vertices;
 	}
 
-	setShapeStyles(shapeStyles: FigureStyles): IEditableShape {
+	setShapeStyles(shapeStyles: FigureStyles): IShape {
 		return new TriangleShape(shapeStyles, this._vertices);
 	}
 

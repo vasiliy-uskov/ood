@@ -1,35 +1,35 @@
 import {FigureStyles} from "../painter/primitives/FigureStyles";
-import {IEditableShape, IShape} from "./IShape";
+import {IShape} from "./IShape";
 import {Vec2} from "../utils/Vec2";
 import {isDefAndNotNull} from "../utils/utils";
 import {Frame} from "./Frame";
 import {PrimitivesType} from "../painter/primitives/PrimitivesType";
 import {Figure} from "../painter/primitives/Figure";
 
-export class CompositeShape implements IEditableShape {
-	constructor(shapes: Array<IEditableShape>) {
+export class CompositeShape implements IShape {
+	constructor(shapes: Array<IShape>) {
 		this._shapes = shapes;
 	}
 
-	setShapeStyles(shapeStyles: FigureStyles): IEditableShape {
+	setShapeStyles(shapeStyles: FigureStyles): IShape {
 		return new CompositeShape(this._shapes.map(
 			shape => shape.setShapeStyles(shapeStyles)
 		));
 	}
 
-	scale(scaleX: number, scaleY: number = scaleX, origin?: Vec2): IEditableShape {
+	scale(scaleX: number, scaleY: number = scaleX, origin?: Vec2): IShape {
 		return new CompositeShape(this._shapes.map(
 			shape => shape.scale(scaleX, scaleY, this._getOrigin(origin))
 		))
 	}
 
-	translate(translateVec: Vec2): IEditableShape {
+	translate(translateVec: Vec2): IShape {
 		return new CompositeShape(this._shapes.map(
 			shape => shape.translate(translateVec)
 		))
 	}
 
-	rotate(angle: number, origin?: Vec2): IEditableShape {
+	rotate(angle: number, origin?: Vec2): IShape {
 		return new CompositeShape(this._shapes.map(
 			shape => shape.rotate(angle, this._getOrigin(origin))
 		))
@@ -60,5 +60,5 @@ export class CompositeShape implements IEditableShape {
 		return origin
 	}
 
-	private readonly _shapes: Array<IEditableShape>;
+	private readonly _shapes: Array<IShape>;
 }

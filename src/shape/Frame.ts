@@ -33,7 +33,7 @@ export class Frame {
 				rightBottom = new Vec2(dot.x, rightBottom.y);
 			}
 			if (rightBottom.y < dot.y) {
-				leftTop = new Vec2(rightBottom.x, dot.y);
+				rightBottom = new Vec2(rightBottom.x, dot.y);
 			}
 		}
 		const rightBottomBasis = Vec2.diff(rightBottom, leftTop);

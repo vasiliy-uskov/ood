@@ -6,11 +6,8 @@ import {Frame} from "./Frame";
 export interface IShape {
 	figure(): Figure,
 	frame(): (Frame | null);
-}
-
-export interface IEditableShape extends IShape {
-	setShapeStyles(shapeStyles: FigureStyles): IEditableShape;
-	scale(scaleX: number, scaleY?: number, origin?: Vec2): IEditableShape;
-	translate(translateVec: Vec2): IEditableShape;
-	rotate(angle: number, rotateCenter?: Vec2): IEditableShape;
+	setShapeStyles(shapeStyles: FigureStyles): IShape;
+	scale(scaleX: number, scaleY?: number, origin?: Vec2): IShape;
+	translate(translateVec: Vec2): IShape;
+	rotate(angle: number, rotateCenter?: Vec2): IShape;
 }

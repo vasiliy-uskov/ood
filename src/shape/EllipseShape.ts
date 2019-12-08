@@ -1,5 +1,5 @@
 import {FigureStyles} from "../painter/primitives/FigureStyles";
-import {IEditableShape} from "./IShape";
+import {IShape} from "./IShape";
 import {Vec2} from "../utils/Vec2";
 import {Frame} from "./Frame";
 import {Figure} from "../painter/primitives/Figure";
@@ -7,7 +7,7 @@ import {PrimitivesType} from "../painter/primitives/PrimitivesType";
 import {Transformation} from "../utils/Transformation";
 import {transformBasis} from "../utils/utils";
 
-export class EllipseShape implements IEditableShape {
+export class EllipseShape implements IShape {
 	constructor(shapeStyles: FigureStyles, center: Vec2, basisX: Vec2, basisY: Vec2) {
 		this._shapeStyles = shapeStyles;
 		this._center = center;

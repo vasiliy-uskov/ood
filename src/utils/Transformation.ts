@@ -11,16 +11,16 @@ class Transformation {
 	}
 
 	public add(tansform: Transformation): Transformation {
-		const points1 = Object.assign(tansform._points);
-		const points2 = Object.assign(this._points);
-		points1._00 = points1._00 * points2._00 + points1._01 * points2._10;
-		points1._01 = points1._00 * points2._01 + points1._01 * points2._11;
-		points1._10 = points1._10 * points2._00 + points1._11 * points2._10;
-		points1._11 = points1._10 * points2._01 + points1._11 * points2._11;
-		points1._02 = points1._00 * points2._02 + points1._01 * points2._12 + points1._02;
-		points1._12 = points1._10 * points2._02 + points1._11 * points2._12 + points1._12;
-		this._points = points1;
-		return this;
+		const leftMatrix = tansform._points;
+		const rightMatrix = this._points;
+		return new Transformation({
+			_00: leftMatrix._00 * rightMatrix._00 + leftMatrix._01 * rightMatrix._10,
+			_01: leftMatrix._00 * rightMatrix._01 + leftMatrix._01 * rightMatrix._11,
+			_10: leftMatrix._10 * rightMatrix._00 + leftMatrix._11 * rightMatrix._10,
+			_11: leftMatrix._10 * rightMatrix._01 + leftMatrix._11 * rightMatrix._11,
+			_02: leftMatrix._00 * rightMatrix._02 + leftMatrix._01 * rightMatrix._12 + leftMatrix._02,
+			_12: leftMatrix._10 * rightMatrix._02 + leftMatrix._11 * rightMatrix._12 + leftMatrix._12,
+		});
 	}
 
 	public rotate(angle: number): Transformation {

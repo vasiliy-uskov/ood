@@ -1,6 +1,6 @@
 import {SvgCanvas} from "./canvas/SvgCanvas";
 import {Painter} from "./painter/Painter";
-import {IEditableShape} from "./shape/IShape";
+import {IShape} from "./shape/IShape";
 import {EllipseShape} from "./shape/EllipseShape";
 import {Color} from "./canvas/Color";
 import {Vec2} from "./utils/Vec2";
@@ -8,14 +8,14 @@ import {CompositeShape} from "./shape/CompositeShape";
 import {RectangleShape} from "./shape/RectangleShape";
 import {TriangleShape} from "./shape/TriangleShape";
 
-function createSun(centerPosition: Vec2, size: number): IEditableShape {
+function createSun(centerPosition: Vec2, size: number): IShape {
 	const shapeStyle = {
 		fillColor: Color.yellow(),
 	};
 	return EllipseShape.circle(shapeStyle, centerPosition, size / 2)
 }
 
-function createHouse(leftTopPosition: Vec2, width: number, height: number): IEditableShape {
+function createHouse(leftTopPosition: Vec2, width: number, height: number): IShape {
 	const bodyShapeStyle = {
 		fillColor: Color.black(),
 	};
@@ -64,5 +64,5 @@ const slide = new CompositeShape([
 	createHouse(new Vec2(40, canvasHeight - 120), 100, 120),
 	createSun(new Vec2(170, 30), 20),
 ]);
-Painter.drawFigure(slide.figure(), canvas);
+Painter.drawFigure(slide.rotate(Math.PI / 4).scale(0.5).figure(), canvas);
 console.log(canvas.getPicture());

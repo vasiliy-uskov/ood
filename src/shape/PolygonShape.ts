@@ -1,18 +1,18 @@
 import {FigureStyles} from "../painter/primitives/FigureStyles";
-import {IEditableShape} from "./IShape";
+import {IShape} from "./IShape";
 import {Transformation} from "../utils/Transformation";
 import {Vec2} from "../utils/Vec2";
 import {Figure} from "../painter/primitives/Figure";
 import {PrimitivesType} from "../painter/primitives/PrimitivesType";
 import {Frame} from "./Frame";
 
-export class PolygonShape implements IEditableShape {
+export class PolygonShape implements IShape {
 	constructor(shapeStyles: FigureStyles, points: ReadonlyArray<Vec2>) {
 		this._shapeStyles = shapeStyles;
 		this._points = points;
 	}
 
-	setShapeStyles(shapeStyles: FigureStyles): IEditableShape {
+	setShapeStyles(shapeStyles: FigureStyles): IShape {
 		return new PolygonShape(shapeStyles, this._points);
 	}
 
