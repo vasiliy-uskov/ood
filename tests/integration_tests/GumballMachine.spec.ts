@@ -17,23 +17,19 @@ function createNaiveGumballMachine(startGumballsCount: number): {logger: MockLog
 
 function getMachines(startGumballsCount: number): Array<{logger: MockLogger, machine: IGumballMachine}> {
 	return [
-		createStatesGumballMachine(startGumballsCount),
 		createNaiveGumballMachine(startGumballsCount),
+		createStatesGumballMachine(startGumballsCount),
 	]
 }
 
-function isAllElementsEquals<T>(items: Array<T>): boolean {
+function checkAllElementsEquals<T>(items: Array<T>): void {
 	if (!items.length) {
-		return true;
+		return;
 	}
 	for (const item of items)
 	{
-		if (item !== items[0])
-		{
-			return false;
-		}
+		expect(item).toBe(items[0]);
 	}
-	return true;
 }
 
 function useCase(message: string, startGumballsCount: number, useCaseFn: (machine: IGumballMachine) => void) {
@@ -44,8 +40,8 @@ function useCase(message: string, startGumballsCount: number, useCaseFn: (machin
 		}
 		const loggerResults = machines.map(({logger}) => logger.result());
 		const states = machines.map(({machine}) => machine.toString());
-		expect(isAllElementsEquals(loggerResults)).toBeTruthy();
-		expect(isAllElementsEquals(states)).toBeTruthy();
+		checkAllElementsEquals(loggerResults);
+		checkAllElementsEquals(states);
 		expect(states[0]).toMatchSnapshot();
 		expect(loggerResults[0]).toMatchSnapshot();
 	});
@@ -68,6 +64,31 @@ useCase('Можно забрать четвертак, после того ка�
 	machine.ejectQuarter();
 });
 
+useCase('Можно забрать несколько четвертаков, после того как они были вставлены', 1, machine => {
+	machine.insertQuarter();
+	machine.insertQuarter();
+	machine.insertQuarter();
+	machine.ejectQuarter();
+});
+
+useCase('Можно вставлять до пяти четвертаков', 1, machine => {
+	machine.insertQuarter();
+	machine.insertQuarter();
+	machine.insertQuarter();
+	machine.insertQuarter();
+	machine.insertQuarter();
+	machine.insertQuarter();
+});
+
+useCase('Если количество вставленных четвертаков больше, чем жвачки, хранящейся в автомате, то можно вернуть оставшиеся четвертаки', 1, machine => {
+	machine.insertQuarter();
+	machine.insertQuarter();
+	machine.turnCrank();
+	machine.turnCrank();
+	machine.ejectQuarter();
+	machine.turnCrank();
+});
+
 useCase('Можно заполнить автомат', 0, machine => {
 	machine.refill(1);
 });
@@ -75,6 +96,18 @@ useCase('Можно заполнить автомат', 0, machine => {
 useCase('Можно достать всю жвачку из автомата', 2, machine => {
 	machine.refill(0);
 });
+
+useCase('При заполнении автомата, вставленные четвертаки не теряются', 1, machine => {
+	machine.insertQuarter();
+	machine.insertQuarter();
+	machine.insertQuarter();
+	machine.turnCrank();
+	machine.turnCrank();
+	machine.refill(5);
+	machine.turnCrank();
+	machine.turnCrank();
+});
+
 
 useCase('Если ручка была провёрнута четвертак изъять нельзя', 1, machine => {
 	machine.insertQuarter();

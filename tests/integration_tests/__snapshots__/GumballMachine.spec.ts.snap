@@ -17,6 +17,27 @@ Oops, out of gumballs
 "
 `;
 
+exports[`Если количество вставленных четвертаков больше, чем жвачки, хранящейся в автомате, то можно вернуть оставшиеся четвертаки 1`] = `
+"
+Mighty Gumball, Inc.
+JS-enabled Standing Gumball Model #2019
+Inventory: 0 gumballs
+Machine is sold out
+"
+`;
+
+exports[`Если количество вставленных четвертаков больше, чем жвачки, хранящейся в автомате, то можно вернуть оставшиеся четвертаки 2`] = `
+"You inserted a quarter
+You inserted a quarter
+You turned...
+A gumball comes rolling out the slot...
+Oops, out of gumballs
+You turned but there's no gumballs
+1 quarter returned
+You turned but there's no gumballs
+"
+`;
+
 exports[`Если ручка была провёрнута четвертак изъять нельзя 1`] = `
 "
 Mighty Gumball, Inc.
@@ -35,6 +56,25 @@ You can't eject, you haven't inserted a quarter yet
 "
 `;
 
+exports[`Можно вставлять до пяти четвертаков 1`] = `
+"
+Mighty Gumball, Inc.
+JS-enabled Standing Gumball Model #2019
+Inventory: 1 gumball
+Machine is waiting for turn of crank
+"
+`;
+
+exports[`Можно вставлять до пяти четвертаков 2`] = `
+"You inserted a quarter
+You inserted a quarter
+You inserted a quarter
+You inserted a quarter
+You inserted a quarter
+You can't insert another quarter
+"
+`;
+
 exports[`Можно достать всю жвачку из автомата 1`] = `
 "
 Mighty Gumball, Inc.
@@ -45,6 +85,23 @@ Machine is sold out
 `;
 
 exports[`Можно достать всю жвачку из автомата 2`] = `""`;
+
+exports[`Можно забрать несколько четвертаков, после того как они были вставлены 1`] = `
+"
+Mighty Gumball, Inc.
+JS-enabled Standing Gumball Model #2019
+Inventory: 1 gumball
+Machine is waiting for quarter
+"
+`;
+
+exports[`Можно забрать несколько четвертаков, после того как они были вставлены 2`] = `
+"You inserted a quarter
+You inserted a quarter
+You inserted a quarter
+3 quarters returned
+"
+`;
 
 exports[`Можно забрать четвертак, после того как он был вставлен 1`] = `
 "
@@ -57,7 +114,7 @@ Machine is waiting for quarter
 
 exports[`Можно забрать четвертак, после того как он был вставлен 2`] = `
 "You inserted a quarter
-Quarter returned
+1 quarter returned
 "
 `;
 
@@ -83,7 +140,7 @@ Machine is waiting for turn of crank
 
 exports[`Нельзя вставить два четвертака за раз 2`] = `
 "You inserted a quarter
-You can't insert another quarter
+You inserted a quarter
 "
 `;
 
@@ -97,7 +154,7 @@ Machine is waiting for quarter
 `;
 
 exports[`Нельзя достать четвертак, если он не был всавлен 2`] = `
-"You haven't inserted a quarter
+"You can't eject, you haven't inserted a quarter yet
 "
 `;
 
@@ -147,5 +204,29 @@ You inserted a quarter
 You turned...
 A gumball comes rolling out the slot...
 Oops, out of gumballs
+"
+`;
+
+exports[`При заполнении автомата, вставленные четвертаки не теряются 1`] = `
+"
+Mighty Gumball, Inc.
+JS-enabled Standing Gumball Model #2019
+Inventory: 3 gumballs
+Machine is waiting for quarter
+"
+`;
+
+exports[`При заполнении автомата, вставленные четвертаки не теряются 2`] = `
+"You inserted a quarter
+You inserted a quarter
+You inserted a quarter
+You turned...
+A gumball comes rolling out the slot...
+Oops, out of gumballs
+You turned but there's no gumballs
+You turned...
+A gumball comes rolling out the slot...
+You turned...
+A gumball comes rolling out the slot...
 "
 `;

@@ -11,21 +11,16 @@ export class GumballMachine {
 	private readonly _noQuarterState: NoQuarterState;
 	private readonly _hasQuarterState: HasQuarterState;
 	private _state: IState;
-	private _count = 0;
+	private _gumballsCount: number;
+	private _quartersCount = 0;
 
-	constructor(numBalls: number, logger: ILogger) {
+	constructor(gumballsCount: number, logger: ILogger) {
 		this._logger = logger;
-		this._count = numBalls;
 		const interfaceImpl = this._getGumballMachineInterface();
 		this._soldOutState = new SoldOutState(interfaceImpl, logger);
 		this._noQuarterState = new NoQuarterState(interfaceImpl, logger);
 		this._hasQuarterState = new HasQuarterState(interfaceImpl, logger);
-		if (this._count > 0) {
-			this._state = this._noQuarterState;
-		}
-		else {
-			this._state = this._soldOutState;
-		}
+		this.refill(gumballsCount)
 	}
 
 	ejectQuarter() {
@@ -41,12 +36,15 @@ export class GumballMachine {
 	}
 
 	refill(count: number) {
-		this._count = count;
-		if (count > 0) {
-			this._setNoQuarterState();
+		this._gumballsCount = count;
+		if (!this._gumballsCount) {
+			this._setSoldOutState();
+		}
+		else if (this._quartersCount) {
+			this._setHasQuarterState();
 		}
 		else {
-			this._setSoldOutState();
+			this._setNoQuarterState();
 		}
 	}
 
@@ -54,13 +52,16 @@ export class GumballMachine {
 		return `
 Mighty Gumball, Inc.
 JS-enabled Standing Gumball Model #2019
-Inventory: ${this._count} gumball${this._count != 1 ? "s" : ""}
+Inventory: ${this._gumballsCount} gumball${this._gumballsCount != 1 ? "s" : ""}
 Machine is ${this._state.toString()}
 `;
 	}
 
 	private _getGumballMachineInterface(): IGumballMachine {
 		return {
+			getQuartersCount: this._getQuartersCount.bind(this),
+			insertQuarter: this._insertQuarter.bind(this),
+			ejectQuarters: this._ejectQuarters.bind(this),
 			getBallCount: this._getBallCount.bind(this),
 			releaseBall: this._releaseBall.bind(this),
 			setSoldOutState: this._setSoldOutState.bind(this),
@@ -69,15 +70,25 @@ Machine is ${this._state.toString()}
 		}
 	}
 
+	private _getQuartersCount(): number {
+		return this._quartersCount;
+	}
+
+	private _insertQuarter(): void {
+		++this._quartersCount;
+	}
+
+	private _ejectQuarters(): void {
+		this._quartersCount = 0;
+	}
+
 	private _getBallCount(): number {
-		return this._count;
+		return this._gumballsCount;
 	}
 
 	private _releaseBall(): void {
-		if (this._count != 0) {
-			this._logger.log("A gumball comes rolling out the slot...");
-			--this._count;
-		}
+		--this._gumballsCount;
+		--this._quartersCount;
 	}
 
 	private _setSoldOutState(): void {

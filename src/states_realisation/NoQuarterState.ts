@@ -13,11 +13,12 @@ export class NoQuarterState implements IState {
 
 	insertQuarter(): void {
 		this._logger.log("You inserted a quarter");
+		this._gumballMachine.insertQuarter();
 		this._gumballMachine.setHasQuarterState();
 	}
 
 	ejectQuarter(): void {
-		this._logger.log("You haven't inserted a quarter");
+		this._logger.log("You can't eject, you haven't inserted a quarter yet");
 	}
 
 	turnCrank(): void {

@@ -3,6 +3,8 @@ import {IGumballMachine} from "./IGumballMachine";
 import {ILogger} from "../ILogger";
 
 export class HasQuarterState implements IState {
+	public static readonly MAX_QUARTERS_COUNT = 5;
+
 	private readonly _gumballMachine: IGumballMachine;
 	private readonly _logger: ILogger;
 
@@ -12,22 +14,31 @@ export class HasQuarterState implements IState {
 	}
 
 	insertQuarter(): void {
-		this._logger.log("You can't insert another quarter");
+		if (this._gumballMachine.getQuartersCount() < HasQuarterState.MAX_QUARTERS_COUNT) {
+			this._gumballMachine.insertQuarter();
+			this._logger.log("You inserted a quarter");
+		}
+		else {
+			this._logger.log("You can't insert another quarter");
+		}
 	}
 
 	ejectQuarter(): void {
-		this._logger.log("Quarter returned");
+		const quartersCount = this._gumballMachine.getQuartersCount();
+		this._logger.log(`${quartersCount} quarter${quartersCount > 1 ? "s" : ""} returned`);
+		this._gumballMachine.ejectQuarters();
 		this._gumballMachine.setNoQuarterState();
 	}
 
 	turnCrank(): void {
 		this._logger.log("You turned...");
 		this._gumballMachine.releaseBall();
-		if (this._gumballMachine.getBallCount() == 0) {
+		this._logger.log("A gumball comes rolling out the slot...");
+		if (!this._gumballMachine.getBallCount()) {
 			this._logger.log("Oops, out of gumballs");
 			this._gumballMachine.setSoldOutState();
 		}
-		else {
+		else if (!this._gumballMachine.getQuartersCount()) {
 			this._gumballMachine.setNoQuarterState();
 		}
 	}

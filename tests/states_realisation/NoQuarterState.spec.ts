@@ -11,7 +11,9 @@ it('insertQuarter', () => {
 	const gumballMachine = new MockGumballMachine();
 	const state = new NoQuarterState(gumballMachine, new MockLogger());
 	state.insertQuarter();
+	expect(gumballMachine.insertQuarter).toBeCalled();
 	expect(gumballMachine.setHasQuarterState).toBeCalled();
+	expect(gumballMachine.ejectQuarters).not.toBeCalled();
 	expect(gumballMachine.setNoQuarterState).not.toBeCalled();
 	expect(gumballMachine.setSoldOutState).not.toBeCalled();
 	expect(gumballMachine.releaseBall).not.toBeCalled();

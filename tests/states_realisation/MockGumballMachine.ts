@@ -1,9 +1,19 @@
 export class MockGumballMachine {
-	public count = 0;
+	public gumballCount = 0;
+	public quartersCount = 0;
+
+	insertQuarter = jest.fn();
+
+	ejectQuarters = jest.fn();
+
+	getQuartersCount() {
+		return this.quartersCount;
+	}
 
 	getBallCount(): number {
-		return this.count;
+		return this.gumballCount;
 	}
+
 	releaseBall = jest.fn();
 
 	setSoldOutState = jest.fn();
@@ -13,6 +23,8 @@ export class MockGumballMachine {
 	setHasQuarterState = jest.fn();
 
 	checkGumballMachineDoNotChangeState() {
+		expect(this.ejectQuarters).not.toBeCalled();
+		expect(this.insertQuarter).not.toBeCalled();
 		expect(this.setHasQuarterState).not.toBeCalled();
 		expect(this.setNoQuarterState).not.toBeCalled();
 		expect(this.setSoldOutState).not.toBeCalled();

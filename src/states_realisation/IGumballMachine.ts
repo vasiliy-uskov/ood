@@ -1,4 +1,10 @@
 export interface IGumballMachine {
+	insertQuarter(): void;
+
+	ejectQuarters(): void;
+
+	getQuartersCount(): number;
+
 	releaseBall(): void;
 
 	getBallCount(): number;

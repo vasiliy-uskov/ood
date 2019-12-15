@@ -16,7 +16,14 @@ export class SoldOutState implements IState {
 	}
 
 	ejectQuarter(): void {
-		this._logger.log("You can't eject, you haven't inserted a quarter yet");
+		const quartersCount = this._gumballMachine.getQuartersCount();
+		if (quartersCount) {
+			this._gumballMachine.ejectQuarters();
+			this._logger.log(`${quartersCount} quarter${quartersCount > 1 ? "s" : ""} returned`);
+		}
+		else {
+			this._logger.log("You can't eject, you haven't inserted a quarter yet");
+		}
 	}
 
 	turnCrank(): void {

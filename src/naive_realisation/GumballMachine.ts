@@ -1,81 +1,80 @@
-import {State, stateToString} from "./Sates";
 import {ILogger} from "../ILogger";
 
 export class GumballMachine {
-	private _state: State;
-	private _count: number;
+	public static readonly MAX_QUARTERS_COUNT = 5;
+
+	private _gumballsCount: number;
 	private _logger: ILogger;
+	private _quartersCount = 0;
 
 	constructor(count: number, logger: ILogger) {
-		this._state = count > 0 ? State.NoQuarter : State.SoldOut;
-		this._count = count;
+		this._gumballsCount = count;
 		this._logger = logger;
 	}
 
 	insertQuarter(): void {
-		switch (this._state) {
-			case State.SoldOut:
-				this._logger.log("You can't insert a quarter, the machine is sold out");
-				break;
-			case State.NoQuarter:
-				this._logger.log("You inserted a quarter");
-				this._state = State.HasQuarter;
-				break;
-			case State.HasQuarter:
-				this._logger.log("You can't insert another quarter");
-				break;
+		if (!this._gumballsCount) {
+			this._logger.log("You can't insert a quarter, the machine is sold out");
+		}
+		else if (this._quartersCount < GumballMachine.MAX_QUARTERS_COUNT) {
+			this._logger.log("You inserted a quarter");
+			this._quartersCount++;
+		}
+		else {
+			this._logger.log("You can't insert another quarter");
 		}
 	}
 
 	ejectQuarter(): void {
-		switch (this._state) {
-			case State.HasQuarter:
-				this._logger.log("Quarter returned");
-				this._state = State.NoQuarter;
-				break;
-			case State.NoQuarter:
-				this._logger.log("You haven't inserted a quarter");
-				break;
-			case State.SoldOut:
-				this._logger.log("You can't eject, you haven't inserted a quarter yet");
-				break;
+		if (this._quartersCount) {
+			this._logger.log(`${this._quartersCount} quarter${this._quartersCount > 1 ? "s" : ""} returned`);
+			this._quartersCount = 0;
+		}
+		else {
+			this._logger.log("You can't eject, you haven't inserted a quarter yet");
 		}
 	}
 
 	turnCrank(): void {
-		switch (this._state) {
-			case State.SoldOut:
-				this._logger.log("You turned but there's no gumballs");
-				break;
-			case State.NoQuarter:
-				this._logger.log("You turned but there's no quarter");
-				break;
-			case State.HasQuarter:
-				this._logger.log("You turned...");
-				this._logger.log("A gumball comes rolling out the slot...");
-				--this._count;
-				if (this._count == 0) {
-					this._logger.log("Oops, out of gumballs");
-					this._state = State.SoldOut;
-				}
-				else {
-					this._state = State.NoQuarter;
-				}
-				break;
+		if (!this._gumballsCount) {
+			this._logger.log("You turned but there's no gumballs");
+		}
+		else if (!this._quartersCount) {
+			this._logger.log("You turned but there's no quarter");
+		}
+		else {
+			this._logger.log("You turned...");
+			this._logger.log("A gumball comes rolling out the slot...");
+			--this._gumballsCount;
+			--this._quartersCount;
+			if (this._gumballsCount == 0) {
+				this._logger.log("Oops, out of gumballs");
+			}
 		}
 	}
 
-	refill(numBalls: number): void {
-		this._count = numBalls;
-		this._state = numBalls > 0 ? State.NoQuarter : State.SoldOut;
+	refill(gumballsCount: number): void {
+		this._gumballsCount = gumballsCount;
 	}
 
 	toString(): string {
 		return `
 Mighty Gumball, Inc.
 JS-enabled Standing Gumball Model #2019
-Inventory: ${this._count} gumball${this._count != 1 ? "s" : ""}
-Machine is ${stateToString(this._state)}
+Inventory: ${this._gumballsCount} gumball${this._gumballsCount != 1 ? "s" : ""}
+Machine is ${this._getMachineState()}
 `;
+	}
+
+	private _getMachineState() {
+		if (!this._gumballsCount) {
+			return "sold out";
+		}
+		else if (!this._quartersCount) {
+			return "waiting for quarter";
+		}
+		else {
+			return "waiting for turn of crank";
+		}
 	}
 }
