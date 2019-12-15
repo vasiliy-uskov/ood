@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Если вставить четвертак и провернуть ручку, машина отдаёт жвачку 1`] = `
+"
+Mighty Gumball, Inc.
+JS-enabled Standing Gumball Model #2019
+Inventory: 0 gumballs
+Machine is sold out
+"
+`;
+
+exports[`Если вставить четвертак и провернуть ручку, машина отдаёт жвачку 2`] = `
+"You inserted a quarter
+You turned...
+A gumball comes rolling out the slot...
+Oops, out of gumballs
+"
+`;
+
+exports[`Если ручка была провёрнута четвертак изъять нельзя 1`] = `
+"
+Mighty Gumball, Inc.
+JS-enabled Standing Gumball Model #2019
+Inventory: 0 gumballs
+Machine is sold out
+"
+`;
+
+exports[`Если ручка была провёрнута четвертак изъять нельзя 2`] = `
+"You inserted a quarter
+You turned...
+A gumball comes rolling out the slot...
+Oops, out of gumballs
+You can't eject, you haven't inserted a quarter yet
+"
+`;
+
+exports[`Можно достать всю жвачку из автомата 1`] = `
+"
+Mighty Gumball, Inc.
+JS-enabled Standing Gumball Model #2019
+Inventory: 0 gumballs
+Machine is sold out
+"
+`;
+
+exports[`Можно достать всю жвачку из автомата 2`] = `""`;
+
+exports[`Можно забрать четвертак, после того как он был вставлен 1`] = `
+"
+Mighty Gumball, Inc.
+JS-enabled Standing Gumball Model #2019
+Inventory: 1 gumball
+Machine is waiting for quarter
+"
+`;
+
+exports[`Можно забрать четвертак, после того как он был вставлен 2`] = `
+"You inserted a quarter
+Quarter returned
+"
+`;
+
+exports[`Можно заполнить автомат 1`] = `
+"
+Mighty Gumball, Inc.
+JS-enabled Standing Gumball Model #2019
+Inventory: 1 gumball
+Machine is waiting for quarter
+"
+`;
+
+exports[`Можно заполнить автомат 2`] = `""`;
+
+exports[`Нельзя вставить два четвертака за раз 1`] = `
+"
+Mighty Gumball, Inc.
+JS-enabled Standing Gumball Model #2019
+Inventory: 2 gumballs
+Machine is waiting for turn of crank
+"
+`;
+
+exports[`Нельзя вставить два четвертака за раз 2`] = `
+"You inserted a quarter
+You can't insert another quarter
+"
+`;
+
+exports[`Нельзя достать четвертак, если он не был всавлен 1`] = `
+"
+Mighty Gumball, Inc.
+JS-enabled Standing Gumball Model #2019
+Inventory: 2 gumballs
+Machine is waiting for quarter
+"
+`;
+
+exports[`Нельзя достать четвертак, если он не был всавлен 2`] = `
+"You haven't inserted a quarter
+"
+`;
+
+exports[`Нельзя получить жвачку если она закочилась 1`] = `
+"
+Mighty Gumball, Inc.
+JS-enabled Standing Gumball Model #2019
+Inventory: 0 gumballs
+Machine is sold out
+"
+`;
+
+exports[`Нельзя получить жвачку если она закочилась 2`] = `
+"You can't insert a quarter, the machine is sold out
+You turned but there's no gumballs
+"
+`;
+
+exports[`Нельзя провернуть ручку, если четвертак не был вставлен 1`] = `
+"
+Mighty Gumball, Inc.
+JS-enabled Standing Gumball Model #2019
+Inventory: 1 gumball
+Machine is waiting for quarter
+"
+`;
+
+exports[`Нельзя провернуть ручку, если четвертак не был вставлен 2`] = `
+"You turned but there's no quarter
+"
+`;
+
+exports[`После первого шарика жвачки можно получить следующий, если в автомате есть жвачка 1`] = `
+"
+Mighty Gumball, Inc.
+JS-enabled Standing Gumball Model #2019
+Inventory: 0 gumballs
+Machine is sold out
+"
+`;
+
+exports[`После первого шарика жвачки можно получить следующий, если в автомате есть жвачка 2`] = `
+"You inserted a quarter
+You turned...
+A gumball comes rolling out the slot...
+You inserted a quarter
+You turned...
+A gumball comes rolling out the slot...
+Oops, out of gumballs
+"
+`;

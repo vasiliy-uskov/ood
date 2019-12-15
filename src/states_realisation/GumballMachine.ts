@@ -42,12 +42,10 @@ export class GumballMachine {
 
 	refill(count: number) {
 		this._count = count;
-		if (count > 0)
-		{
+		if (count > 0) {
 			this._setNoQuarterState();
 		}
-		else
-		{
+		else {
 			this._setSoldOutState();
 		}
 	}
