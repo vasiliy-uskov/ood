@@ -1,6 +1,8 @@
-export class MockLogger {
-	getLogger(): (str: string) => void {
-		return this._logger;
+import {ILogger} from "../src/ILogger";
+
+export class MockLogger implements ILogger {
+	log(str: string): void {
+		this._result = this._result + str + '\n';
 	}
 
 	matchResult(): void {
@@ -8,7 +10,4 @@ export class MockLogger {
 	}
 
 	private _result = '';
-	private _logger = (str: string) => {
-		this._result = this._result + str + '\n';
-	}
 }

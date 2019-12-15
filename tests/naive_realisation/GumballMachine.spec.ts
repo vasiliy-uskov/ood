@@ -1,10 +1,10 @@
-import {GumballMachine} from "../src/GumballMachineWithState";
-import {MockLogger} from "./MockLogger";
+import {MockLogger} from "../MockLogger";
+import {GumballMachine} from "../../src/naive_realisation/GumballMachine";
 
 function useCase(message: string, startGumballsCount: number, useCaseFn: (machine: GumballMachine) => void) {
 	it(message, () => {
 		const logger = new MockLogger();
-		const machine = new GumballMachine(startGumballsCount, logger.getLogger());
+		const machine = new GumballMachine(startGumballsCount, logger);
 		useCaseFn(machine);
 		logger.matchResult();
 		expect(machine.toString()).toMatchSnapshot();
