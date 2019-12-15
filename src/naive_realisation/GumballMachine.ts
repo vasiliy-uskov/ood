@@ -52,7 +52,7 @@ export class GumballMachine {
 				break;
 			case State.HasQuarter:
 				this._logger.log("You turned...");
-				this._logger.log("A gumball comes rolling out the slot");
+				this._logger.log("A gumball comes rolling out the slot...");
 				--this._count;
 				if (this._count == 0) {
 					this._logger.log("Oops, out of gumballs");
@@ -73,7 +73,7 @@ export class GumballMachine {
 	toString(): string {
 		return `
 Mighty Gumball, Inc.
-JS-enabled Standing Gumball Model #2016
+JS-enabled Standing Gumball Model #2019
 Inventory: ${this._count} gumball${this._count != 1 ? "s" : ""}
 Machine is ${stateToString(this._state)}
 `;

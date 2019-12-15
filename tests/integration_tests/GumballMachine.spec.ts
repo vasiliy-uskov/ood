@@ -1,13 +1,53 @@
 import {MockLogger} from "../MockLogger";
-import {GumballMachine} from "../../src/naive_realisation/GumballMachine";
+import {GumballMachine as StatesGumballMachine} from "../../src/states_realisation/GumballMachine";
+import {GumballMachine as NaiveGumballMachine} from "../../src/naive_realisation/GumballMachine";
+import {IGumballMachine} from "../../src/IGumballMachine";
 
-function useCase(message: string, startGumballsCount: number, useCaseFn: (machine: GumballMachine) => void) {
+function createStatesGumballMachine(startGumballsCount: number): {logger: MockLogger, machine: IGumballMachine} {
+	const logger = new MockLogger();
+	const machine = new StatesGumballMachine(startGumballsCount, logger);
+	return {logger, machine}
+}
+
+function createNaiveGumballMachine(startGumballsCount: number): {logger: MockLogger, machine: IGumballMachine} {
+	const logger = new MockLogger();
+	const machine = new NaiveGumballMachine(startGumballsCount, logger);
+	return {logger, machine}
+}
+
+function getMachines(startGumballsCount: number): Array<{logger: MockLogger, machine: IGumballMachine}> {
+	return [
+		createStatesGumballMachine(startGumballsCount),
+		createNaiveGumballMachine(startGumballsCount),
+	]
+}
+
+function isAllElementsEquals<T>(items: Array<T>): boolean {
+	if (!items.length) {
+		return true;
+	}
+	for (const item of items)
+	{
+		if (item !== items[0])
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+function useCase(message: string, startGumballsCount: number, useCaseFn: (machine: IGumballMachine) => void) {
 	it(message, () => {
-		const logger = new MockLogger();
-		const machine = new GumballMachine(startGumballsCount, logger);
-		useCaseFn(machine);
-		logger.matchResult();
-		expect(machine.toString()).toMatchSnapshot();
+		const machines = getMachines(startGumballsCount);
+		for (const {machine} of machines) {
+			useCaseFn(machine);
+		}
+		const loggerResults = machines.map(({logger}) => logger.result());
+		const states = machines.map(({machine}) => machine.toString());
+		expect(isAllElementsEquals(loggerResults)).toBeTruthy();
+		expect(isAllElementsEquals(states)).toBeTruthy();
+		expect(states[0]).toMatchSnapshot();
+		expect(loggerResults[0]).toMatchSnapshot();
 	});
 }
 

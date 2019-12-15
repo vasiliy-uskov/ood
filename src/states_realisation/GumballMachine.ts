@@ -40,10 +40,22 @@ export class GumballMachine {
 		this._state.turnCrank();
 	}
 
+	refill(count: number) {
+		this._count = count;
+		if (count > 0)
+		{
+			this._setNoQuarterState();
+		}
+		else
+		{
+			this._setSoldOutState();
+		}
+	}
+
 	toString(): string {
 		return `
 Mighty Gumball, Inc.
-JS-enabled Standing Gumball Model #2016
+JS-enabled Standing Gumball Model #2019
 Inventory: ${this._count} gumball${this._count != 1 ? "s" : ""}
 Machine is ${this._state.toString()}
 `;

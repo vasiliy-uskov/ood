@@ -5,8 +5,8 @@ export class MockLogger implements ILogger {
 		this._result = this._result + str + '\n';
 	}
 
-	matchResult(): void {
-		expect(this._result).toMatchSnapshot();
+	result(): string {
+		return this._result;
 	}
 
 	private _result = '';
