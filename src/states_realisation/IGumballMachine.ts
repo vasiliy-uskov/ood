@@ -7,7 +7,5 @@ export interface IGumballMachine {
 
 	setNoQuarterState(): void;
 
-	setSoldState(): void;
-
 	setHasQuarterState(): void;
 }

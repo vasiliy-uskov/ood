@@ -23,15 +23,31 @@ useCase('После первого шарика жвачки можно полу
 	machine.turnCrank();
 });
 
-
 useCase('Можно забрать четвертак, после того как он был вставлен', 1, machine => {
 	machine.insertQuarter();
 	machine.ejectQuarter();
 });
 
+useCase('Можно заполнить автомат', 0, machine => {
+	machine.refill(1);
+});
+
+useCase('Можно достать всю жвачку из автомата', 2, machine => {
+	machine.refill(0);
+});
+
 useCase('Если ручка была провёрнута четвертак изъять нельзя', 1, machine => {
 	machine.insertQuarter();
 	machine.turnCrank();
+	machine.ejectQuarter();
+});
+
+useCase('Нельзя вставить два четвертака за раз', 2, machine => {
+	machine.insertQuarter();
+	machine.insertQuarter();
+});
+
+useCase('Нельзя достать четвертак, если он не был всавлен', 2, machine => {
 	machine.ejectQuarter();
 });
 

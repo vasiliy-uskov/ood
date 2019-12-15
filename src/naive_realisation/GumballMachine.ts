@@ -15,17 +15,14 @@ export class GumballMachine {
 	insertQuarter(): void {
 		switch (this._state) {
 			case State.SoldOut:
-				this._logger.log("You can't insert a quarter, the machine is sold out\n");
+				this._logger.log("You can't insert a quarter, the machine is sold out");
 				break;
 			case State.NoQuarter:
-				this._logger.log("You inserted a quarter\n");
+				this._logger.log("You inserted a quarter");
 				this._state = State.HasQuarter;
 				break;
 			case State.HasQuarter:
-				this._logger.log("You can't insert another quarter\n");
-				break;
-			case State.Sold:
-				this._logger.log("Please wait, we're already giving you a gumball\n");
+				this._logger.log("You can't insert another quarter");
 				break;
 		}
 	}
@@ -33,17 +30,14 @@ export class GumballMachine {
 	ejectQuarter(): void {
 		switch (this._state) {
 			case State.HasQuarter:
-				this._logger.log("Quarter returned\n");
+				this._logger.log("Quarter returned");
 				this._state = State.NoQuarter;
 				break;
 			case State.NoQuarter:
-				this._logger.log("You haven't inserted a quarter\n");
-				break;
-			case State.Sold:
-				this._logger.log("Sorry you already turned the crank\n");
+				this._logger.log("You haven't inserted a quarter");
 				break;
 			case State.SoldOut:
-				this._logger.log("You can't eject, you haven't inserted a quarter yet\n");
+				this._logger.log("You can't eject, you haven't inserted a quarter yet");
 				break;
 		}
 	}
@@ -51,18 +45,22 @@ export class GumballMachine {
 	turnCrank(): void {
 		switch (this._state) {
 			case State.SoldOut:
-				this._logger.log("You turned but there's no gumballs\n");
+				this._logger.log("You turned but there's no gumballs");
 				break;
 			case State.NoQuarter:
-				this._logger.log("You turned but there's no quarter\n");
+				this._logger.log("You turned but there's no quarter");
 				break;
 			case State.HasQuarter:
-				this._logger.log("You turned...\n");
-				this._state = State.Sold;
-				this._dispense();
-				break;
-			case State.Sold:
-				this._logger.log("Turning twice doesn't get you another gumball\n");
+				this._logger.log("You turned...");
+				this._logger.log("A gumball comes rolling out the slot");
+				--this._count;
+				if (this._count == 0) {
+					this._logger.log("Oops, out of gumballs");
+					this._state = State.SoldOut;
+				}
+				else {
+					this._state = State.NoQuarter;
+				}
 				break;
 		}
 	}
@@ -79,28 +77,5 @@ JS-enabled Standing Gumball Model #2016
 Inventory: ${this._count} gumball${this._count != 1 ? "s" : ""}
 Machine is ${stateToString(this._state)}
 `;
-	}
-
-	private _dispense(): void {
-		switch (this._state) {
-			case State.Sold:
-				this._logger.log("A gumball comes rolling out the slot\n");
-				--this._count;
-				if (this._count == 0) {
-					this._logger.log("Oops, out of gumballs\n");
-					this._state = State.SoldOut;
-				}
-				else {
-					this._state = State.NoQuarter;
-				}
-				break;
-			case State.NoQuarter:
-				this._logger.log("You need to pay first\n");
-				break;
-			case State.SoldOut:
-			case State.HasQuarter:
-				this._logger.log("No gumball dispensed\n");
-				break;
-		}
 	}
 }

@@ -24,10 +24,6 @@ export class NoQuarterState implements IState {
 		this._logger.log("You turned but there's no quarter");
 	}
 
-	dispense(): void {
-		this._logger.log("You need to pay first");
-	}
-
 	toString(): string {
 		return "waiting for quarter";
 	}

@@ -1,14 +1,12 @@
 import {IState} from "./IState";
 import {IGumballMachine} from "./IGumballMachine";
 import {SoldOutState} from "./SoldOutState";
-import {SoldState} from "./SoldState";
 import {NoQuarterState} from "./NoQuarterState";
 import {HasQuarterState} from "./HasQuarterState";
 import {ILogger} from "../ILogger";
 
 export class GumballMachine {
 	private readonly _logger: ILogger;
-	private readonly _soldState: SoldState;
 	private readonly _soldOutState: SoldOutState;
 	private readonly _noQuarterState: NoQuarterState;
 	private readonly _hasQuarterState: HasQuarterState;
@@ -20,7 +18,6 @@ export class GumballMachine {
 		this._count = numBalls;
 		const interfaceImpl = this._getGumballMachineInterface();
 		this._soldOutState = new SoldOutState(interfaceImpl, logger);
-		this._soldState = new SoldState(interfaceImpl, logger);
 		this._noQuarterState = new NoQuarterState(interfaceImpl, logger);
 		this._hasQuarterState = new HasQuarterState(interfaceImpl, logger);
 		if (this._count > 0) {
@@ -41,7 +38,6 @@ export class GumballMachine {
 
 	turnCrank() {
 		this._state.turnCrank();
-		this._state.dispense();
 	}
 
 	toString(): string {
@@ -59,7 +55,6 @@ Machine is ${this._state.toString()}
 			releaseBall: this._releaseBall.bind(this),
 			setSoldOutState: this._setSoldOutState.bind(this),
 			setNoQuarterState: this._setNoQuarterState.bind(this),
-			setSoldState: this._setSoldState.bind(this),
 			setHasQuarterState: this._setHasQuarterState.bind(this),
 		}
 	}
@@ -81,10 +76,6 @@ Machine is ${this._state.toString()}
 
 	private _setNoQuarterState(): void {
 		this._state = this._noQuarterState;
-	}
-
-	private _setSoldState(): void {
-		this._state = this._soldState;
 	}
 
 	private _setHasQuarterState(): void {

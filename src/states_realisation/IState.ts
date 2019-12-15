@@ -5,7 +5,5 @@ export interface IState {
 
 	turnCrank(): void;
 
-	dispense(): void;
-
 	toString(): string;
 }

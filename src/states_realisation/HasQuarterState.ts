@@ -22,11 +22,14 @@ export class HasQuarterState implements IState {
 
 	turnCrank(): void {
 		this._logger.log("You turned...");
-		this._gumballMachine.setSoldState();
-	}
-
-	dispense(): void {
-		this._logger.log("No gumball dispensed");
+		this._gumballMachine.releaseBall();
+		if (this._gumballMachine.getBallCount() == 0) {
+			this._logger.log("Oops, out of gumballs");
+			this._gumballMachine.setSoldOutState();
+		}
+		else {
+			this._gumballMachine.setNoQuarterState();
+		}
 	}
 
 	toString(): string {

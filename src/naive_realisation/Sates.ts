@@ -2,7 +2,6 @@ export enum State {
 	SoldOut,
 	NoQuarter,
 	HasQuarter,
-	Sold,
 }
 
 
@@ -14,7 +13,5 @@ export function stateToString(state: State) {
 			return "sold out";
 		case State.NoQuarter:
 			return "waiting for quarter";
-		case State.Sold:
-			return "delivering a gumball";
 	}
 }

@@ -23,10 +23,6 @@ export class SoldOutState implements IState {
 		this._logger.log("You turned but there's no gumballs");
 	}
 
-	dispense(): void {
-		this._logger.log("No gumball dispensed");
-	}
-
 	toString(): string {
 		return "sold out";
 	}
